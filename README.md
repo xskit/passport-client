@@ -131,7 +131,7 @@ foreach($response as $item){
 
 }
 ```
-服务器控制 code、 message 和 数据实体 的值，需要定义数据体为json字符串:
+* 服务端 控制 code、 message 和 数据实体 的值，需要定义数据体为json字符串:
 {
     "data":"数据实体"，
     "code":"状态码",
