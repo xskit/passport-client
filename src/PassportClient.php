@@ -3,80 +3,163 @@
 namespace XsPkg\PassportClient;
 
 use Illuminate\Support\Arr;
+use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\RequestInterface;
 use XsPkg\PassportClient\Contracts\ApiContract;
+use XsPkg\PassportClient\Contracts\HttpRequestAsyncContract;
+use XsPkg\PassportClient\Contracts\HttpRequestContract;
 use XsPkg\PassportClient\Contracts\HttpResponseContract;
+use XsPkg\PassportClient\Contracts\ShouldRefreshTokenContract;
+use XsPkg\PassportClient\Grant\Authorize;
+use XsPkg\PassportClient\Grant\Machine;
+use XsPkg\PassportClient\Grant\Password;
+use XsPkg\PassportClient\Http\HttpRequest;
+use XsPkg\PassportClient\Http\HttpRequestAsync;
 
 /**
  * Class PassportClient
  * @package XsPkg\PassportClient
  */
-class PassportClient
+class PassportClient implements ShouldRefreshTokenContract
 {
 
     private $config;
 
-    private $baseUri;
+    private $driver;
 
     public function __construct($config)
     {
         $this->config = $config;
     }
 
-    private function getConfig($driver, $grant)
+    /**
+     * 设置 驱动
+     * @param $name
+     */
+    public function driver($name)
     {
-        $driver_name = $driver ?? $this->config['default'];
-        $config = Arr::get($this->config, $driver_name);
-        $this->baseUri = Arr::get($config, 'base_uri');
-        return Arr::get($config, $grant, []);
+        $this->driver = $name;
+    }
+
+    public function getDriver()
+    {
+        return $this->driver ?? $this->config['default'];
+    }
+
+    public function getBaseUri(): string
+    {
+        return rtrim(Arr::get($this->getConfig(), 'base_uri'), '/');
+    }
+
+    public function getConfig()
+    {
+        return Arr::get($this->config, $this->getDriver(), []);
     }
 
     /**
      * 授权码授权
-     * @param null $driver
+     * @return Authorize
      */
-    public function grantAuthorize($driver = null)
+    public function grantAuthorize()
     {
-        $config = $this->getConfig($driver, 'authorize_grant');
-
+        return new Authorize($this->getBaseUri(), $this->getConfig());
     }
 
     /**
      * 机器授权
-     * @param null $driver
+     * @return Machine
      */
-    public function grantMachine($driver = null)
+    public function grantMachine()
     {
-        $config = $this->getConfig($driver, 'machine_grant');
-
+        return new Machine($this->getBaseUri(), $this->getConfig());
     }
 
     /**
      * 密码授权
-     * @param null $driver
+     * @return Password
      */
-    public function grantPassword($driver = null)
+    public function grantPassword()
     {
-        $config = $this->getConfig($driver, 'password_grant');
-
+        return new Password($this->getBaseUri(), $this->getConfig());
     }
 
     /**
-     * 个人令牌授权
-     * @param null $driver
-     */
-    public function grantPersonal($driver = null)
-    {
-        $config = $this->getConfig($driver, 'personal_grant');
-
-    }
-
-    /**
-     * @param ApiContract $api
+     * 刷新访问令牌
+     * @param string $token
      * @return HttpResponseContract
      */
-    public function invoke(ApiContract $api): HttpResponseContract
+    public function refreshToken($token)
     {
+        $client = new HttpRequest($this->getBaseUri() . Arr::get($this->getConfig(), 'query'));
+        return $client->param([
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $token,
+            'client_id' => Arr::get($this->getConfig(), 'client_id'),
+            'client_secret' => Arr::get($this->getConfig(), 'client_secret'),
+            'scope' => '',
+        ])->post();
+    }
 
+    /**
+     * 发启请求
+     * @param ApiContract $api 接口对象
+     * @param array $guzzle
+     * @return HttpRequestContract
+     */
+    public function request(ApiContract $api, array $guzzle = []): HttpRequestContract
+    {
+        if ($name = $api->driver()) {
+            //修改驱动
+            $this->driver($name);
+        }
+        $http = new HttpRequest($this->getBaseUri(), $guzzle);
+
+        return $http->query($api->query())
+            ->param($api->param())
+            ->token($api->token());
+    }
+
+    /**
+     * 发启异步请求
+     * @param ApiContract $api 接口对象
+     * @param array $guzzle
+     * @return HttpRequestAsyncContract
+     */
+    public function requestAsync(ApiContract $api, array $guzzle = []): HttpRequestAsyncContract
+    {
+        if ($name = $api->driver()) {
+            //修改驱动
+            $this->driver($name);
+        }
+        $http = new HttpRequestAsync($this->getBaseUri(), $guzzle);
+
+        return $http->query($api->query())
+            ->param($api->param())
+            ->token($api->token());
+    }
+
+    /**
+     * 发送请求
+     * @param RequestInterface $request Psr-7 Request 对象
+     * @param array $guzzle
+     * @return HttpResponseContract
+     */
+    public function send(RequestInterface $request, array $guzzle = []): HttpResponseContract
+    {
+        return (new HttpRequest($request, $guzzle))->send();
+    }
+
+    /**
+     * 发送请求
+     * @param RequestInterface $request Psr-7 Request 对象
+     * @param $onFulfilled
+     * @param $onRejected
+     * @param array $guzzle
+     * @return PromiseInterface
+     */
+    public function sendAsync(RequestInterface $request, $onFulfilled, $onRejected, array $guzzle = []): PromiseInterface
+    {
+        return (new HttpRequestAsync($request, $guzzle))->sendAsync($onFulfilled, $onRejected)->promise();
     }
 
 }

@@ -13,8 +13,8 @@ use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseInterface;
 use XsPkg\PassportClient\Contracts\HttpResponseContract;
-use GuzzleHttp\Exception\RequestException;
 
 class HttpResponse implements HttpResponseContract
 {
@@ -34,7 +34,7 @@ class HttpResponse implements HttpResponseContract
 
     protected $data;
 
-    public function receive(Response $response)
+    public function receive(ResponseInterface $response)
     {
         $this->response = $response;
 
@@ -45,6 +45,9 @@ class HttpResponse implements HttpResponseContract
             $this->data = $this->data['data'] ?? [];
             $this->code = $this->data['code'];
             $this->message = $this->data['message'];
+        } else {
+            $this->code = $response->getStatusCode();
+            $this->message = $response->getReasonPhrase();
         }
 
         return $this;
@@ -84,7 +87,7 @@ class HttpResponse implements HttpResponseContract
     }
 
     /**
-     * @return RequestException|null
+     * @return TransferException|null
      */
     public function getException()
     {

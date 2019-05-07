@@ -16,7 +16,13 @@ interface HttpRequestContract
 {
     public function query($value);
 
-    public function params(array $value);
+    /**
+     * 设置查询参数
+     * @param string|array $key
+     * @param array $value
+     * @return $this
+     */
+    public function param($key, $value = null);
 
     public function token($value);
 
@@ -33,4 +39,8 @@ interface HttpRequestContract
     public function head(): HttpResponseContract;
 
     public function patch(): HttpResponseContract;
+
+    public function upload(): HttpResponseContract;
+
+
 }

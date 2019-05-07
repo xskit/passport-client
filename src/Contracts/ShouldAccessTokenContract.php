@@ -9,18 +9,12 @@
 namespace XsPkg\PassportClient\Contracts;
 
 
-interface GrantContract
+interface ShouldAccessTokenContract
 {
     /**
      * 返回访问令牌
-     * @return mixed
+     * @return HttpResponseContract
      */
     public function accessToken();
-
-    /**
-     * 刷新访问令牌
-     * @return mixed
-     */
-    public function refreshToken();
 
 }

@@ -10,61 +10,17 @@ namespace XsPkg\PassportClient\Http;
 
 use XsPkg\PassportClient\Contracts\HttpRequestContract;
 use XsPkg\PassportClient\Contracts\HttpResponseContract;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class HttpRequest implements HttpRequestContract
+class HttpRequest extends AbstractRequest implements HttpRequestContract
 {
-    protected $baseUri;
-
-    protected $config;
-
-    protected $guzzleOptions;
-
-    protected $client;
-
-    protected $query;
-
-    public function __construct($base_uri, $config, array $guzzle = [])
-    {
-        $this->baseUri = $base_uri;
-
-        $this->config = $config;
-
-        $this->client = new Client([
-                'base_uri' => $base_uri
-            ] + $guzzle
-        );
-    }
-
-    public function query($url)
-    {
-        $this->query = $url;
-        return $this;
-    }
-
-    public function params(array $value)
-    {
-        $this->guzzleOptions['query'] = $value;
-        return $this;
-    }
-
-    public function token($value)
-    {
-        if ($value) {
-            $this->guzzleOptions['headers'] = [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $value,
-            ];
-        }
-        return $this;
-    }
 
     /**
      * @return HttpResponseContract
      */
     public function get(): HttpResponseContract
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send('GET');
     }
 
@@ -73,6 +29,7 @@ class HttpRequest implements HttpRequestContract
      */
     public function post(): HttpResponseContract
     {
+        $this->guzzleOptions['form_params'] = $this->param;
         return $this->send('POST');
     }
 
@@ -81,6 +38,7 @@ class HttpRequest implements HttpRequestContract
      */
     public function put(): HttpResponseContract
     {
+        $this->guzzleOptions['form_params'] = $this->param;
         return $this->send('PUT');
     }
 
@@ -89,6 +47,7 @@ class HttpRequest implements HttpRequestContract
      */
     public function delete(): HttpResponseContract
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send('DELETE');
     }
 
@@ -97,6 +56,7 @@ class HttpRequest implements HttpRequestContract
      */
     public function options(): HttpResponseContract
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send('OPTIONS');
     }
 
@@ -105,6 +65,7 @@ class HttpRequest implements HttpRequestContract
      */
     public function patch(): HttpResponseContract
     {
+        $this->guzzleOptions['form_params'] = $this->param;
         return $this->send('PATCH');
     }
 
@@ -113,6 +74,13 @@ class HttpRequest implements HttpRequestContract
      */
     public function head(): HttpResponseContract
     {
+        $this->guzzleOptions['query'] = $this->param;
+        return $this->send('HEAD');
+    }
+
+    public function upload(): HttpResponseContract
+    {
+        $this->guzzleOptions['body'] = $this->param;
         return $this->send('HEAD');
     }
 
@@ -120,11 +88,16 @@ class HttpRequest implements HttpRequestContract
      * @param $method
      * @return HttpResponse
      */
-    public function send($method)
+    public function send($method = ''): HttpResponseContract
     {
         $httpResponse = new HttpResponse();
         try {
-            $res = $this->client->request($method, $this->query, $this->guzzleOptions);
+            if ($this->request) {
+                $res = $this->client->send($this->request);
+            } else {
+                $res = $this->client->request($method, $this->query, $this->guzzleOptions);
+            }
+
             $httpResponse->receive($res);
         } catch (GuzzleException  $e) {
             $httpResponse->throwException($e);
