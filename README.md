@@ -49,7 +49,7 @@ $response = PassportClient::grantPassword()->signIn($username,$password)->access
 - 创建自己的业务api  
 例如 创建  RestFULL风格的个人信息 SDK
 
-1. 创建一个 实现 `XsPkg\Contracts\ApiContract` 的类，比如这样:
+一、 创建一个 实现 `XsPkg\Contracts\ApiContract` 的类，比如这样:
 ```php
 class UserInfo implements ApiContract
 {
@@ -95,7 +95,7 @@ PassportClient::request(new UserInfo())->param(['username' => 'account','passwor
 
 ```
 
-2. 使用 PSR-7 Request `GuzzleHttp\Psr7\Request`
+二、 使用 PSR-7 Request `GuzzleHttp\Psr7\Request`
 ```php 
 //同步，返回 XsPkg\PassportClient\Contracts\HttpResponseContract
 PassportClient::send(new Request('GET'),['timeout' => 2]) : HttpResponseContract;
