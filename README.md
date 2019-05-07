@@ -10,9 +10,10 @@ composer require xspkg/passport-client
 ### 配置
 只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要手动复制包中的 `config/passport_client.php` 到 项目 `config` 配置目录,添加 其它 驱动配置
 
-### 首先通过容器依赖注入 或 PassportClient Facade 获取到 PassportClient实例
+### 引入PassportClient 实例
+首先通过容器依赖注入 或 PassportClient Facade 获取到 PassportClient 实例  
+
 大部分请求都返回 实现了 `\XsPkg\PassportClient\ContractsHttpResponseContract` 的实例 
----
 
 ### 使用 Facade 的说明
 
