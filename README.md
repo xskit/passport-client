@@ -112,11 +112,18 @@ PassportClient::sendAsync(new Request('POST'),callable $onFulfilled,callable $on
 ```php
 // 判断请求是否成功
 $response->isOk();
-// 自定义判断请求是否成功
+// 自定义判断请求是否成功,回调返回 true 时 isOk() 返回true
 $response->isOk(function(\XsPkg\PassportClient\Http\HttpResponse $response){
     $response->getResponse(); //获取 PSR-7 response 实例,请求失败时为null
     $response->getException(); //获取 GuzzleHttp\Exception\TransferException 异常，请求成功时为 null
 });
+// 判断请求是否失败,失败时，返回 true
+$response->isErr();
+//回调返回 false 时 isErr 返回 true
+$response->isErr(function(\XsPkg\PassportClient\Http\HttpResponse $response){
+      $response->getResponse(); //获取 PSR-7 response 实例,请求失败时为null
+      $response->getException(); //获取 GuzzleHttp\Exception\TransferException 异常，请求成功时为 null
+  });
 
 // 获取请求成功或失败时的 消息 和 状态码 ，默认为 http 请求状态码 和 短语
 $response->getCode(); //状态码
