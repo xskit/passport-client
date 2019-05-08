@@ -9,7 +9,7 @@ class PassportClientServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . 'config/passport_client.php' => config_path('passport_client.php'),
+            __DIR__ . '/config/passport_client.php' => config_path('passport_client.php'),
         ], 'passport-client-config');
     }
 
