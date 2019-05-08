@@ -39,7 +39,10 @@ class HttpResponse implements HttpResponseContract
         $this->response = $response;
 
         $this->body = (string)$response->getBody();
-        $this->data = Arr::wrap(empty($this->body) ? null : json_decode($this->body, true));
+        //解析JSON
+        if ($data = json_decode($this->body, true)) {
+            $this->data = Arr::wrap(empty($this->body) ? null : $data);
+        }
 
         if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
             $this->data = $this->data['data'];
@@ -153,6 +156,10 @@ class HttpResponse implements HttpResponseContract
         return $this->is($closure, false);
     }
 
+    /**
+     * 返回 Json 转 Array 的数据
+     * @return array
+     */
     public function toArray()
     {
         return empty($this->data) ? [] : Arr::wrap($this->data);

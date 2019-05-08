@@ -134,14 +134,18 @@ $response->isErr(function(\XsPkg\PassportClient\Http\HttpResponse $response){
 $response->getCode(); //状态码
 $response->getMessage();//消息
 
-// 获取数据实体 array 类型
+// 获取 接收到的响应为JSON格式的 转 array 类型
 $response->toArray();
-// 可直接访问数据
+// 可直接访问 array 类型的数据
 $response['key'];
-// 轮循
+// 轮循 array 类型的数据
 foreach($response as $item){
 
 }
+
+//获取原数据体
+$response->getResponse()->getBody();
+
 ```
 * 服务端 控制 code、 message 和 数据实体 的值，需要定义数据体为json字符串:
 {
