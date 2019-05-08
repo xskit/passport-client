@@ -8,7 +8,12 @@ composer require xspkg/passport-client
 ## 使用
 
 ### 配置
-只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要手动复制包中的 `config/passport_client.php` 到 项目 `config` 配置目录,添加 其它 驱动配置
+发布配置文件
+```bash
+$ php artisan vendor:publish --tag=passport-client-config
+```
+
+只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要 `config/passport_client.php` 配置目录,添加 其它 驱动配置
 
 ### 引入PassportClient 实例
 首先通过容器依赖注入 或 PassportClient Facade 获取到 PassportClient 实例  
