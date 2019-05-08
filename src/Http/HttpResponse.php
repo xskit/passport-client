@@ -41,8 +41,8 @@ class HttpResponse implements HttpResponseContract
         $this->body = (string)$response->getBody();
         $this->data = Arr::wrap(empty($this->body) ? [] : json_decode($this->body, true));
 
-        if (isset($this->data['message'], $this->data['code'])) {
-            $this->data = $this->data['data'] ?? [];
+        if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
+            $this->data = $this->data['data'];
             $this->code = $this->data['code'];
             $this->message = $this->data['message'];
         } else {
@@ -70,6 +70,9 @@ class HttpResponse implements HttpResponseContract
             }
             $this->code = $e->getCode();
         } elseif ($e instanceof TransferException) {
+            $this->code = $e->getCode();
+            $this->message = $e->getMessage();
+        } elseif ($e instanceof \Throwable) {
             $this->code = $e->getCode();
             $this->message = $e->getMessage();
         } else {
