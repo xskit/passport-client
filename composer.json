@@ -41,7 +41,7 @@
     },
     "laravel": {
       "providers": [
-        "XsPkg\\PassportClient\\PassportClientProvider"
+        "XsPkg\\PassportClient\\PassportClientServiceProvider"
       ],
       "facades": {
         "PassportClient": "XsPkg\\PassportClient\\Facade"
