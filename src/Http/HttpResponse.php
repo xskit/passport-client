@@ -39,7 +39,7 @@ class HttpResponse implements HttpResponseContract
         $this->response = $response;
 
         $this->body = (string)$response->getBody();
-        $this->data = Arr::wrap(empty($this->body) ? [] : json_decode($this->body, true));
+        $this->data = Arr::wrap(empty($this->body) ? null : json_decode($this->body, true));
 
         if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
             $this->data = $this->data['data'];
@@ -155,7 +155,7 @@ class HttpResponse implements HttpResponseContract
 
     public function toArray()
     {
-        return is_null($this->data) ? [] : Arr::wrap($this->data);
+        return empty($this->data) ? [] : Arr::wrap($this->data);
     }
 
     public function getIterator()
