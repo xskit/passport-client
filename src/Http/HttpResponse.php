@@ -155,7 +155,7 @@ class HttpResponse implements HttpResponseContract
 
     public function toArray()
     {
-        return Arr::wrap($this->data);
+        return is_null($this->data) ? [] : Arr::wrap($this->data);
     }
 
     public function getIterator()
