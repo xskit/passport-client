@@ -3,7 +3,7 @@ return [
     'default' => 'service',
 
     'service' => [
-        'base_uri' => env('PASSPORT_BASE_URI', 'http://example.com'),
+        'base_uri' => env('PASSPORT_CLIENT_BASE_URI', 'http://example.com'),
 
         'client_id' => env('PASSPORT_CLIENT_ID', ''),
         'client_secret' => env('PASSPORT_CLIENT_SECRET', ''),
@@ -11,16 +11,16 @@ return [
 
         //授权码授权
         'authorize_grant' => [
-            'redirect_uri' => env('PASSPORT_AUTHORIZE_REDIRECT_URI', 'http://example.com/callback'),
-            'scope' => env('PASSPORT_AUTHORIZE_SCOPE', ''),
+            'redirect_uri' => env('PASSPORT_CLIENT_AUTHORIZE_REDIRECT_URI', 'http://example.com/callback'),
+            'scope' => env('PASSPORT_CLIENT_AUTHORIZE_SCOPE', ''),
         ],
         // 机器授权
         'machine_grant' => [
-            'scope' => env('PASSPORT_MACHINE_SCOPE', ''),
+            'scope' => env('PASSPORT_CLIENT_MACHINE_SCOPE', ''),
         ],
         // 密码授权
         'password_grant' => [
-            'scope' => env('PASSPORT_PASSWORD_SCOPE', ''),
+            'scope' => env('PASSPORT_CLIENT_PASSWORD_SCOPE', ''),
         ],
     ]
 
