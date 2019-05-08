@@ -41,6 +41,12 @@ interface HttpResponseContract extends Arrayable, IteratorAggregate
      */
     public function getMessage();
 
+    /**
+     * 返回 数据体
+     * @return mixed
+     */
+    public function getBody();
+
 
     /**
      * 请求是否成功

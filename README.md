@@ -147,12 +147,13 @@ foreach($response as $item){
 $response->getResponse()->getBody();
 
 ```
-* 服务端 控制 code、 message 和 数据实体 的值，需要定义数据体为json字符串:
+* 服务端 默认控制键名 code、 message 和 data 来修改 getCode(),getMessage()和toArray() 的值，需要定义数据体为json字符串:
 {
     "data":"数据实体"，
     "code":"状态码",
     "message":"消息"
 }
+* 可能过在配置文件中定义  `response_handle` 配置项为一个 Closure类函数，对响应数据的自定义控制 
 然后可以，可以通过 PSR-7 response 实例，获取 http 请求信息，比如获取请求状态码
 ```php
 $response->getResponse()->getCode()

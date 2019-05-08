@@ -22,6 +22,9 @@ return [
         'password_grant' => [
             'scope' => env('PASSPORT_CLIENT_PASSWORD_SCOPE', ''),
         ],
-    ]
+    ],
+
+    //自定义响应数据的处理，可配置一个匿名函数,函数可用$this 指向是 XsPkg\PassportClient\Http\HttpResponse 响应实例
+    'response_handle' => null,
 
 ];

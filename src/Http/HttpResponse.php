@@ -12,7 +12,9 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use XsPkg\PassportClient\Contracts\HttpResponseContract;
 
@@ -34,23 +36,38 @@ class HttpResponse implements HttpResponseContract
 
     protected $data;
 
+    protected static $responseHandle;
+
+    public static function setResponseHandle(\Closure $closure)
+    {
+        self::$responseHandle = $closure;
+    }
+
     public function receive(ResponseInterface $response)
     {
         $this->response = $response;
 
-        $this->body = (string)$response->getBody();
+        $this->code = $response->getStatusCode();
+        $this->message = $response->getReasonPhrase();
+
+        $this->body = $response->getBody();
+
+        $body = (string)$this->body;
         //解析JSON
-        if ($data = json_decode($this->body, true)) {
-            $this->data = Arr::wrap(empty($this->body) ? null : $data);
+        if ($data = json_decode($body, true)) {
+            $this->data = Arr::wrap(empty($data) ? null : $data);
         }
 
-        if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
-            $this->data = $this->data['data'];
-            $this->code = $this->data['code'];
-            $this->message = $this->data['message'];
-        } else {
-            $this->code = $response->getStatusCode();
-            $this->message = $response->getReasonPhrase();
+        //处理自定义响应配置
+        $closure = Config::get('passport_client.response_handle', function (ResponseInterface $response) {
+            if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
+                $this->data = $this->data['data'];
+                $this->code = $this->data['code'];
+                $this->message = $this->data['message'];
+            }
+        });
+        if ($closure instanceof \Closure) {
+            $closure->call($this, $response);
         }
 
         return $this;
@@ -98,6 +115,15 @@ class HttpResponse implements HttpResponseContract
     public function getException()
     {
         return $this->exception;
+    }
+
+    /**
+     * 返回 数据体
+     * @return MessageInterface
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 
     /**
