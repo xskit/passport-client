@@ -16,7 +16,9 @@ $ php artisan vendor:publish --tag=passport-client-config
 只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要 `config/passport_client.php` 配置目录,添加 其它 驱动配置
 
 ### 引入PassportClient 实例
-首先通过容器依赖注入 或 PassportClient Facade 获取到 PassportClient 实例  
+有两种方式：
+1. 首先通过容器依赖注入`\XsPkg\PassportClient\Client`
+2. PassportClient Facade 静态调用的方式使用
 
 大部分请求都返回 实现了 `\XsPkg\PassportClient\ContractsHttpResponseContract` 的实例 
 
