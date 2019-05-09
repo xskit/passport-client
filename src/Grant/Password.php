@@ -37,12 +37,15 @@ class Password implements ShouldAccessTokenContract
      * 授权 账号密码
      * @param string $account 账号
      * @param string $password 密码
+     * @return $this
      */
     public function signIn($account, $password)
     {
         $this->account = $account;
 
         $this->password = $password;
+
+        return $this;
     }
 
     /**
