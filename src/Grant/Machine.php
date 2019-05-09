@@ -34,9 +34,9 @@ class Machine implements ShouldAccessTokenContract
         $client = new HttpRequest($this->baseUrl, Arr::get($this->config, 'guzzle_options', []));
         return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'client_credentials',
-            'client_id' => Arr::get($this->config, 'client_id'),
-            'client_secret' => Arr::get($this->config, 'client_secret'),
-            'scope' => Arr::get($this->config, 'password.scope', '*'),
+            'client_id' => Arr::get($this->config, 'machine_grant.client_id'),
+            'client_secret' => Arr::get($this->config, 'machine_grant.client_secret'),
+            'scope' => Arr::get($this->config, 'machine_grant.scope', '*'),
         ])->post();
     }
 

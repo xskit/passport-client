@@ -5,8 +5,6 @@ return [
     'service' => [
         'base_uri' => env('PASSPORT_CLIENT_BASE_URI', 'http://example.com'),
 
-        'client_id' => env('PASSPORT_CLIENT_ID', ''),
-        'client_secret' => env('PASSPORT_CLIENT_SECRET', ''),
         'query' => env('PASSPORT_CLIENT_QUERY', '/oauth/token'),
 
         //授权码授权
@@ -17,10 +15,14 @@ return [
         ],
         // 机器授权
         'machine_grant' => [
+            'client_id' => env('PASSPORT_CLIENT_MACHINE_ID', ''),
+            'client_secret' => env('PASSPORT_CLIENT_MACHINE_SECRET', ''),
             'scope' => env('PASSPORT_CLIENT_MACHINE_SCOPE', ''),
         ],
         // 密码授权
         'password_grant' => [
+            'client_id' => env('PASSPORT_CLIENT_PASSWORD_ID', ''),
+            'client_secret' => env('PASSPORT_CLIENT_PASSWORD_SECRET', ''),
             'scope' => env('PASSPORT_CLIENT_PASSWORD_SCOPE', ''),
         ],
         // 获取授权码时，GuzzleHttp 选项配置

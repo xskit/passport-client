@@ -57,11 +57,11 @@ class Password implements ShouldAccessTokenContract
         $client = new HttpRequest($this->baseUrl, Arr::get($this->config, 'guzzle_options', []));
         return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'password',
-            'client_id' => Arr::get($this->config, 'client_id'),
-            'client_secret' => Arr::get($this->config, 'client_secret'),
+            'client_id' => Arr::get($this->config, 'password_grant.client_id'),
+            'client_secret' => Arr::get($this->config, 'password_grant.client_secret'),
             'username' => $this->account,
             'password' => $this->password,
-            'scope' => Arr::get($this->config, 'password.scope', '*'),
+            'scope' => Arr::get($this->config, 'password_grant.scope', '*'),
         ])->post();
     }
 }
