@@ -8,7 +8,7 @@
 
 namespace XsPkg\PassportClient;
 
-use Illuminate\Support\Facades\Facade as BasicFacade;
+use Illuminate\Support\Facades\Facade;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use XsPkg\PassportClient\Contracts\ApiContract;
@@ -20,8 +20,8 @@ use XsPkg\PassportClient\Grant\Machine;
 use XsPkg\PassportClient\Grant\Password;
 
 /**
- * Class Facade
- * @package XsPkg\PassportClient
+ * Class Client
+ * @package XsPkg\Client
  * @method static PassportClient driver(string $name) 设置当前驱动
  * @method static string getDriver() 返回当前驱动名
  * @method static string getBaseUri() 返回当前驱动基础uri
@@ -35,7 +35,7 @@ use XsPkg\PassportClient\Grant\Password;
  * @method static HttpResponseContract send(RequestInterface $request, array $guzzle = []) psr-7 请求
  * @method static PromiseInterface sendAsync(RequestInterface $request, $onFulfilled, $onRejected, array $guzzle = []) psr-7 异步请求
  */
-class Facade extends BasicFacade
+class Client extends Facade
 {
     protected static function getFacadeAccessor()
     {

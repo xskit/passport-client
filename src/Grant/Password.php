@@ -15,7 +15,7 @@ use XsPkg\PassportClient\Http\HttpRequest;
 
 /**
  * Class Password
- * @package XsPkg\PassportClient\Grant
+ * @package XsPkg\Client\Grant
  */
 class Password implements ShouldAccessTokenContract
 {

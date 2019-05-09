@@ -17,8 +17,8 @@ use XsPkg\PassportClient\Http\HttpRequest;
 use XsPkg\PassportClient\Http\HttpRequestAsync;
 
 /**
- * Class PassportClient
- * @package XsPkg\PassportClient
+ * Class Client
+ * @package XsPkg\Client
  */
 class PassportClient implements ShouldRefreshTokenContract
 {
@@ -35,7 +35,7 @@ class PassportClient implements ShouldRefreshTokenContract
     /**
      * 设置 驱动
      * @param string $name
-     * @return PassportClient
+     * @return Client
      */
     public function driver($name)
     {

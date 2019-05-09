@@ -25,7 +25,7 @@ return [
     ],
 
     // 自定义响应数据的处理
-    // 可配置一个匿名函数,函数可用$this 指向是 XsPkg\PassportClient\Http\HttpResponse 响应实例
+    // 可配置一个匿名函数,函数可用$this 指向是 XsPkg\Client\Http\HttpResponse 响应实例
     // 该函数接收一个 Psr\Http\Message\ResponseInterface 响应实例
     'response_handle' => null,
 
