@@ -73,6 +73,13 @@ class UserInfo implements ApiContract
             //服务端 API 接口路由地址
             return '/api/user_info'
         }
+       /**
+        * 返回 要修改的 基础 uri， 使用配置文件可以返回 void
+        * @return string|void
+        */
+        public function baseUri(){
+            
+        }
     
         /**
          * 返回 查询参数
