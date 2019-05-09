@@ -10,6 +10,7 @@ namespace XsPkg\PassportClient\Contracts;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Collection;
 use IteratorAggregate;
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
@@ -47,6 +48,12 @@ interface HttpResponseContract extends Arrayable, IteratorAggregate, ArrayAccess
      * @return mixed
      */
     public function getBody();
+
+    /**
+     * 返回 转换后的数据集合
+     * @return Collection
+     */
+    public function toCollection(): Collection;
 
 
     /**

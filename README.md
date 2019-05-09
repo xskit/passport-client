@@ -141,17 +141,23 @@ $response->isErr(function(\XsPkg\PassportClient\Http\HttpResponse $response){
 $response->getCode(); //状态码
 $response->getMessage();//消息
 
-// 获取 接收到的响应为JSON格式的 转 array 类型
+//获取原数据体
+$response->getBody();
+```
+
+#### 如果接收到的数据是 可转换为 array 类型时,可以使用以下方法
+
+```
+// 返回数组
 $response->toArray();
-// 可直接访问 array 类型的数据
+// 返回集合对象
+$response->toCollection();
+// 可直接访问
 $response['key'];
-// 轮循 array 类型的数据
+// 轮循数据
 foreach($response as $item){
 
 }
-
-//获取原数据体
-$response->getResponse()->getBody();
 
 ```
 * 服务端 默认控制键名 code、 message 和 data 来修改 getCode(),getMessage()和toArray() 的值，需要定义数据体为json字符串:

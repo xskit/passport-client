@@ -12,6 +12,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Psr\Http\Message\MessageInterface;
@@ -180,6 +181,15 @@ class HttpResponse implements HttpResponseContract
     public function isErr(callable $closure = null): bool
     {
         return $this->is($closure, false);
+    }
+
+    /**
+     * 返回 转换后的数据集合
+     * @return Collection
+     */
+    public function toCollection(): Collection
+    {
+        return Collection::make($this->toArray());
     }
 
     /**
