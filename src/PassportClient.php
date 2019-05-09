@@ -34,11 +34,13 @@ class PassportClient implements ShouldRefreshTokenContract
 
     /**
      * 设置 驱动
-     * @param $name
+     * @param string $name
+     * @return PassportClient
      */
     public function driver($name)
     {
         $this->driver = $name;
+        return $this;
     }
 
     public function getDriver()
@@ -51,6 +53,9 @@ class PassportClient implements ShouldRefreshTokenContract
         return rtrim(Arr::get($this->getConfig(), 'base_uri'), '/');
     }
 
+    /**
+     * @return array
+     */
     public function getConfig()
     {
         return Arr::get($this->config, $this->getDriver(), []);
