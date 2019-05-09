@@ -160,14 +160,28 @@ foreach($response as $item){
 }
 
 ```
-* 服务端 默认控制键名 code、 message 和 data 来修改 getCode(),getMessage()和toArray() 的值，需要定义数据体为json字符串:
+
+- 可以通过 PSR-7 response 实例，获取 http 请求信息，比如获取请求状态码
+```php
+$response->getResponse()->getCode()
+```
+
+* 服务端返回数据为json 字符串时， 数据的默认键名 code、 message 和 data 时，可以修改对应 getCode(),getMessage()和toArray() 的值,如下:
 {
     "data":"数据实体"，
     "code":"状态码",
     "message":"消息"
 }
-* 可能过在配置文件中定义  `response_handle` 配置项为一个 Closure类函数，对响应数据的自定义控制 
-然后可以，可以通过 PSR-7 response 实例，获取 http 请求信息，比如获取请求状态码
+* 自定义解析服务端返回数据配置： `response_handle` 配置项为一个 Closure类函数，对响应数据的控制，如下：
 ```php
-$response->getResponse()->getCode()
+// 自定义响应数据的处理
+// 可配置一个匿名函数,函数可用$this 指向是 XsPkg\PassportClient\Http\HttpResponse 响应实例
+// 该函数接收一个 Psr\Http\Message\ResponseInterface 响应实例
+'response_handle' => function (\Psr\Http\Message\ResponseInterface $response) {
+    if (isset($this->data['data'], $this->data['status'], $this->data['code'])) {
+        $this->data = $this->data['data'];
+        $this->code = $this->data['code'];
+        $this->message = $this->data['status'];
+    }
+},
 ```
