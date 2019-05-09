@@ -31,7 +31,7 @@ class Machine implements ShouldAccessTokenContract
 
     public function accessToken()
     {
-        $client = new HttpRequest($this->baseUrl);
+        $client = new HttpRequest($this->baseUrl, Arr::get($this->config, 'guzzle_options', []));
         return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'client_credentials',
             'client_id' => Arr::get($this->config, 'client_id'),

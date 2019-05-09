@@ -22,6 +22,10 @@ return [
         'password_grant' => [
             'scope' => env('PASSPORT_CLIENT_PASSWORD_SCOPE', ''),
         ],
+        // 获取授权码时，GuzzleHttp 选项配置
+        'guzzle_options' => [
+
+        ],
     ],
 
     // 自定义响应数据的处理
