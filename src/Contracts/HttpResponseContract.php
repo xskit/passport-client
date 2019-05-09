@@ -11,13 +11,14 @@ namespace XsPkg\PassportClient\Contracts;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use IteratorAggregate;
+use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Interface HttpResponseContract
  * @package XsPkg\PassportClient\Contracts
  */
-interface HttpResponseContract extends Arrayable, IteratorAggregate
+interface HttpResponseContract extends Arrayable, IteratorAggregate, ArrayAccess
 {
     /**
      * @return Response|null

@@ -195,4 +195,28 @@ class HttpResponse implements HttpResponseContract
     {
         return new \ArrayIterator($this->toArray());
     }
+
+    public function offsetExists($offset)
+    {
+        return Arr::has($this->toArray(), $offset);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        if (is_array($this->data)) {
+            $this->data[$offset] = $value;
+        }
+    }
+
+    public function offsetGet($offset)
+    {
+        return Arr::get($this->toArray(), $offset);
+    }
+
+    public function offsetUnset($offset)
+    {
+        if (is_array($this->data)) {
+            Arr::forget($this->data, $offset);
+        }
+    }
 }
