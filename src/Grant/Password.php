@@ -54,8 +54,8 @@ class Password implements ShouldAccessTokenContract
      */
     public function accessToken()
     {
-        $client = new HttpRequest($this->baseUrl . 'oauth/token');
-        return $client->param([
+        $client = new HttpRequest($this->baseUrl);
+        return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'password',
             'client_id' => Arr::get($this->config, 'client_id'),
             'client_secret' => Arr::get($this->config, 'client_secret'),

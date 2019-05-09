@@ -46,8 +46,8 @@ class Authorize implements ShouldAccessTokenContract
      */
     public function accessToken()
     {
-        $client = new HttpRequest($this->baseUrl . Arr::get($this->config, 'query'));
-        return $client->param([
+        $client = new HttpRequest($this->baseUrl);
+        return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'authorization_code',
             'client_id' => Arr::get($this->config, 'client_id'),
             'client_secret' => Arr::get($this->config, 'client_secret'),
