@@ -11,6 +11,7 @@ return [
 
         //授权码授权
         'authorize_grant' => [
+            'client_id' => env('PASSPORT_CLIENT_AUTHORIZE_ID', ''),
             'redirect_uri' => env('PASSPORT_CLIENT_AUTHORIZE_REDIRECT_URI', 'http://example.com/callback'),
             'scope' => env('PASSPORT_CLIENT_AUTHORIZE_SCOPE', ''),
         ],
