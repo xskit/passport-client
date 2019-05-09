@@ -117,11 +117,14 @@ class Client implements ShouldRefreshTokenContract
             //修改驱动
             $this->driver($name);
         }
-        $http = new HttpRequest($this->getBaseUri(), $guzzle);
+        $http = new HttpRequest($api->baseUri() ?? $this->getBaseUri(), $guzzle);
 
-        return $http->query($api->query())
-            ->param($api->param())
-            ->token($api->token());
+        $http->query($api->query())->param($api->param());
+
+        if ($api->token()) {
+            $http->token($api->token());
+        }
+        return $http;
     }
 
     /**
@@ -136,11 +139,14 @@ class Client implements ShouldRefreshTokenContract
             //修改驱动
             $this->driver($name);
         }
-        $http = new HttpRequestAsync($this->getBaseUri(), $guzzle);
+        $http = new HttpRequestAsync($api->baseUri() ?? $this->getBaseUri(), $guzzle);
 
-        return $http->query($api->query())
-            ->param($api->param())
-            ->token($api->token());
+        $http->query($api->query())->param($api->param());
+
+        if ($api->token()) {
+            $http->token($api->token());
+        }
+        return $http;
     }
 
     /**

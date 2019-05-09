@@ -54,7 +54,7 @@ abstract class AbstractRequest
 
     /**
      * 设置查询参数
-     * @param string|array $key
+     * @param string|array|null $key
      * @param array $value
      * @return $this
      */
@@ -63,7 +63,11 @@ abstract class AbstractRequest
         if (is_array($key) && is_null($value)) {
             $this->param = $key;
         } else {
-            Arr::set($this->param, $key, $value);
+            if (empty($key)) {
+                $this->param = [];
+            } else {
+                Arr::set($this->param, $key, $value);
+            }
         }
         return $this;
     }

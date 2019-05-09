@@ -13,9 +13,15 @@ interface ApiContract
 {
     /**
      * 返回 使用的驱动,为空时，使用默认配置中的驱动
-     * @return string|null
+     * @return string|null|void
      */
     public function driver();
+
+    /**
+     * 返回 要修改的 基础 uri， 使用配置文件可以返回 void
+     * @return string|void
+     */
+    public function baseUri();
 
     /**
      * 返回 查询地址 （必须）
