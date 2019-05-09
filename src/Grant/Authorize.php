@@ -17,7 +17,7 @@ use XsPkg\PassportClient\Http\HttpRequest;
 /**
  * 访问令牌授权
  * Class Authorize
- * @package XsPkg\Client\Grant
+ * @package XsPkg\ClientFacade\Grant
  */
 class Authorize implements ShouldAccessTokenContract
 {

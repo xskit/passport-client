@@ -44,7 +44,7 @@
         "XsPkg\\PassportClient\\PassportClientServiceProvider"
       ],
       "facades": {
-        "PassportClient": "XsPkg\\PassportClient\\Facade"
+        "PassportClient": "XsPkg\\PassportClient\\Facades\\PassportClient"
       }
     }
   },

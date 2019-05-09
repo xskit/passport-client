@@ -15,7 +15,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Interface HttpResponseContract
- * @package XsPkg\Client\Contracts
+ * @package XsPkg\PassportClient\Contracts
  */
 interface HttpResponseContract extends Arrayable, IteratorAggregate
 {

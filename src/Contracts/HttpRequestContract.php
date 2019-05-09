@@ -10,7 +10,7 @@ namespace XsPkg\PassportClient\Contracts;
 
 /**
  * Interface HttpRequestContract
- * @package XsPkg\Client\Contracts
+ * @package XsPkg\PassportClient\Contracts
  */
 interface HttpRequestContract
 {

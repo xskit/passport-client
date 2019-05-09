@@ -15,7 +15,7 @@ use XsPkg\PassportClient\Http\HttpRequest;
 /**
  * 机器对机器授权
  * Class Machine
- * @package XsPkg\Client\Grant
+ * @package XsPkg\ClientFacade\Grant
  */
 class Machine implements ShouldAccessTokenContract
 {

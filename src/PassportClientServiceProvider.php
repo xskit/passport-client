@@ -15,8 +15,8 @@ class PassportClientServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(PassportClient::class, function ($app) {
-            return new PassportClient($app['config']['passport_client']);
+        $this->app->singleton(Client::class, function ($app) {
+            return new Client($app['config']['passport_client']);
         });
     }
 }
