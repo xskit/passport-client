@@ -1,5 +1,10 @@
 # passport-client
-基于Laravel passport 的授权API访问 Http客户端
+基于Laravel passport 的授权API访问的 Http客户端包装器
+## 功能：
+- 简单的获取服务授权的凭证和 API请求
+- 支持自定义处理返回的数据的响应
+- 自定义 SDK 的请求的包装，需要实现 `XsPkg\Contracts\ApiContract` 接口
+- 支持 同步 或 异步 请求 API服务，可根据 accessToken 访问授权的 api （推荐使用RESTFull 风格的接口）
 
 ## 安装
 ```bash
