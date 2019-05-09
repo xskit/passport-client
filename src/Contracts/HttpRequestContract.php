@@ -24,6 +24,10 @@ interface HttpRequestContract
      */
     public function param($key, $value = null);
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function token($value);
 
     public function get(): HttpResponseContract;

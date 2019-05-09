@@ -13,10 +13,22 @@ use GuzzleHttp\Promise\PromiseInterface;
 
 interface HttpRequestAsyncContract
 {
+    /**
+     * @param $value
+     * @return $this
+     */
     public function query($value);
 
+    /**
+     * @param array $value
+     * @return $this
+     */
     public function param(array $value);
 
+    /**
+     * @param string $value 凭证
+     * @return $this
+     */
     public function token($value);
 
     /**

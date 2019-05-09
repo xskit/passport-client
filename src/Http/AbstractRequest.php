@@ -46,6 +46,10 @@ abstract class AbstractRequest
         $this->client = new Client($guzzle);
     }
 
+    /**
+     * @param $url
+     * @return $this
+     */
     public function query($url)
     {
         $this->query = $url;
