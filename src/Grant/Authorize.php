@@ -63,7 +63,7 @@ class Authorize implements ShouldAccessTokenContract
      */
     public function redirect($implicit = false)
     {
-        return Redirect::to($this->baseUrl . 'oauth/authorize?' . http_build_query([
+        return Redirect::to($this->baseUrl . '/oauth/authorize?' . http_build_query([
                 'client_id' => Arr::get($this->config, 'client_id'),
                 'redirect_uri' => Arr::get($this->config, 'redirect_uri'),
                 'response_type' => $implicit ? 'token' : 'code',
