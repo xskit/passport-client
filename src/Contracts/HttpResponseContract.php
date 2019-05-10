@@ -33,19 +33,19 @@ interface HttpResponseContract extends Arrayable, IteratorAggregate, ArrayAccess
 
     /**
      * 返回 状态码
-     * @return mixed
+     * @return int
      */
     public function getCode();
 
     /**
      * 返回 消息
-     * @return mixed
+     * @return string
      */
     public function getMessage();
 
     /**
      * 返回 数据体
-     * @return mixed
+     * @return string
      */
     public function getBody();
 

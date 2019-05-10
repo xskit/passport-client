@@ -51,9 +51,8 @@ class HttpResponse implements HttpResponseContract
         $this->code = $response->getStatusCode();
         $this->message = $response->getReasonPhrase();
 
-        $this->body = $response->getBody();
+        $this->body = $body = (string)$response->getBody();
 
-        $body = (string)$this->body;
         //解析JSON
         if ($data = json_decode($body, true)) {
             $this->data = Arr::wrap(empty($data) ? null : $data);
@@ -120,7 +119,7 @@ class HttpResponse implements HttpResponseContract
 
     /**
      * 返回 数据体
-     * @return MessageInterface
+     * @return string
      */
     public function getBody()
     {
