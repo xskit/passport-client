@@ -57,9 +57,9 @@ $response = PassportClient::grantPassword()->signIn($username,$password)->access
 // $response 是一个实现了 \XsPkg\PassportClient\ContractsHttpResponseContract 的实例
 
 ```
-#### 快速请求
+#### 一、快速请求
 ```php
-//支持的请求
+//支持的请求方式
 PassportClient::request()->get();
 PassportClient::request()->post();
 PassportClient::request()->put();
@@ -83,12 +83,12 @@ PassportClient::requestAsync()->get();
 PassportClient::requestAsync()->get(callable $onFulfilled);
 PassportClient::requestAsync()->get(callable $onFulfilled, callable $onRejected);
 
-//PSR-7 请求对象的使用
-PassportClient::send(new Request('GET'));
+//PSR-7 Request 请求对象的使用
+PassportClient::send(new Request('GET','url'));
 
-PassportClient::sendAsync(new Request('GET'));
+PassportClient::sendAsync(new Request('GET','url'));
 ```
-#### API 的封装
+#### 二、API 的封装
 - 创建自己的业务api  
 例如 创建  RestFULL风格的个人信息 SDK
 
@@ -155,7 +155,7 @@ PassportClient::request(new UserInfo())->param(['username' => 'account','passwor
 
 ```
 
-二、 使用 PSR-7 Request `GuzzleHttp\Psr7\Request`
+#### 三、 使用 PSR-7 Request `GuzzleHttp\Psr7\Request`
 ```php 
 //同步，返回 XsPkg\PassportClient\Contracts\HttpResponseContract
 PassportClient::send(new Request('GET'),['timeout' => 2]) : HttpResponseContract;
