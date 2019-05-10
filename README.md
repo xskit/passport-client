@@ -16,6 +16,9 @@ composer require xskit/passport-client
 发布配置文件
 ```bash
 $ php artisan vendor:publish --tag=passport-client-config
+# 如果已经有配置文件，强制覆盖配置
+$ php artisan vendor:publish --tag=passport-client-config --force
+
 ```
 
 只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要 `config/passport_client.php` 配置目录,添加 其它 驱动配置
