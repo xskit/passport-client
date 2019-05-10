@@ -1,25 +1,25 @@
 <?php
 
-namespace XsPkg\PassportClient;
+namespace XsKit\PassportClient;
 
 use Illuminate\Support\Arr;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
-use XsPkg\PassportClient\Contracts\ApiContract;
-use XsPkg\PassportClient\Contracts\HttpRequestAsyncContract;
-use XsPkg\PassportClient\Contracts\HttpRequestContract;
-use XsPkg\PassportClient\Contracts\HttpResponseContract;
-use XsPkg\PassportClient\Contracts\ShouldRefreshTokenContract;
-use XsPkg\PassportClient\Exceptions\HttpRequestException;
-use XsPkg\PassportClient\Grant\Authorize;
-use XsPkg\PassportClient\Grant\Machine;
-use XsPkg\PassportClient\Grant\Password;
-use XsPkg\PassportClient\Http\HttpRequest;
-use XsPkg\PassportClient\Http\HttpRequestAsync;
+use XsKit\PassportClient\Contracts\ApiContract;
+use XsKit\PassportClient\Contracts\HttpRequestAsyncContract;
+use XsKit\PassportClient\Contracts\HttpRequestContract;
+use XsKit\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Contracts\ShouldRefreshTokenContract;
+use XsKit\PassportClient\Exceptions\HttpRequestException;
+use XsKit\PassportClient\Grant\Authorize;
+use XsKit\PassportClient\Grant\Machine;
+use XsKit\PassportClient\Grant\Password;
+use XsKit\PassportClient\Http\HttpRequest;
+use XsKit\PassportClient\Http\HttpRequestAsync;
 
 /**
  * Class Client
- * @package XsPkg\PassportClient
+ * @package XsKit\PassportClient
  */
 class Client implements ShouldRefreshTokenContract
 {

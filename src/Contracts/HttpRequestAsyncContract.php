@@ -6,7 +6,7 @@
  * Time: 9:48
  */
 
-namespace XsPkg\PassportClient\Contracts;
+namespace XsKit\PassportClient\Contracts;
 
 
 use GuzzleHttp\Promise\PromiseInterface;

@@ -6,7 +6,7 @@
  * Time: 16:44
  */
 
-namespace XsPkg\PassportClient\Contracts;
+namespace XsKit\PassportClient\Contracts;
 
 
 interface ShouldAccessTokenContract

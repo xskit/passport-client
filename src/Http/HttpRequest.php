@@ -6,10 +6,10 @@
  * Time: 16:30
  */
 
-namespace XsPkg\PassportClient\Http;
+namespace XsKit\PassportClient\Http;
 
-use XsPkg\PassportClient\Contracts\HttpRequestContract;
-use XsPkg\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Contracts\HttpRequestContract;
+use XsKit\PassportClient\Contracts\HttpResponseContract;
 use GuzzleHttp\Exception\GuzzleException;
 
 class HttpRequest extends AbstractRequest implements HttpRequestContract

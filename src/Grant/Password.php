@@ -6,16 +6,16 @@
  * Time: 15:01
  */
 
-namespace XsPkg\PassportClient\Grant;
+namespace XsKit\PassportClient\Grant;
 
 use Illuminate\Support\Arr;
-use XsPkg\PassportClient\Contracts\ShouldAccessTokenContract;
-use XsPkg\PassportClient\Contracts\HttpResponseContract;
-use XsPkg\PassportClient\Http\HttpRequest;
+use XsKit\PassportClient\Contracts\ShouldAccessTokenContract;
+use XsKit\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Http\HttpRequest;
 
 /**
  * Class Password
- * @package XsPkg\ClientFacade\Grant
+ * @package XsKit\ClientFacade\Grant
  */
 class Password implements ShouldAccessTokenContract
 {

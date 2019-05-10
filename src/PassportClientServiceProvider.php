@@ -1,6 +1,6 @@
 <?php
 
-namespace XsPkg\PassportClient;
+namespace XsKit\PassportClient;
 
 use Illuminate\Support\ServiceProvider;
 

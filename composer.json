@@ -1,5 +1,5 @@
 {
-  "name": "xspkg/passport-client",
+  "name": "xskit/passport-client",
   "description": "基于lararvel passport 的授权访问的客户端",
   "keywords": [
     "passport",
@@ -32,7 +32,7 @@
   },
   "autoload": {
     "psr-4": {
-      "XsPkg\\PassportClient\\": "src/"
+      "XsKit\\PassportClient\\": "src/"
     }
   },
   "extra": {
@@ -41,10 +41,10 @@
     },
     "laravel": {
       "providers": [
-        "XsPkg\\PassportClient\\PassportClientServiceProvider"
+        "XsKit\\PassportClient\\PassportClientServiceProvider"
       ],
       "facades": {
-        "PassportClient": "XsPkg\\PassportClient\\Facades\\PassportClient"
+        "PassportClient": "XsKit\\PassportClient\\Facades\\PassportClient"
       }
     }
   },

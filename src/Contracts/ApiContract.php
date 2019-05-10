@@ -6,7 +6,7 @@
  * Time: 19:50
  */
 
-namespace XsPkg\PassportClient\Contracts;
+namespace XsKit\PassportClient\Contracts;
 
 
 interface ApiContract

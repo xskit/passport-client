@@ -6,7 +6,7 @@
  * Time: 14:46
  */
 
-namespace XsPkg\PassportClient\Contracts;
+namespace XsKit\PassportClient\Contracts;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
@@ -17,7 +17,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Interface HttpResponseContract
- * @package XsPkg\PassportClient\Contracts
+ * @package XsKit\PassportClient\Contracts
  */
 interface HttpResponseContract extends Arrayable, IteratorAggregate, ArrayAccess
 {

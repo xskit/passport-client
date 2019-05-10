@@ -6,7 +6,7 @@
  * Time: 16:39
  */
 
-namespace XsPkg\PassportClient\Http;
+namespace XsKit\PassportClient\Http;
 
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\TransferException;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
-use XsPkg\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Contracts\HttpResponseContract;
 
 class HttpResponse implements HttpResponseContract
 {

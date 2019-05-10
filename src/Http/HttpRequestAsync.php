@@ -6,13 +6,13 @@
  * Time: 9:59
  */
 
-namespace XsPkg\PassportClient\Http;
+namespace XsKit\PassportClient\Http;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
-use XsPkg\PassportClient\Contracts\HttpRequestAsyncContract;
-use XsPkg\PassportClient\Exceptions\HttpRequestException;
+use XsKit\PassportClient\Contracts\HttpRequestAsyncContract;
+use XsKit\PassportClient\Exceptions\HttpRequestException;
 
 class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContract
 {

@@ -6,18 +6,18 @@
  * Time: 16:44
  */
 
-namespace XsPkg\PassportClient\Grant;
+namespace XsKit\PassportClient\Grant;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use XsPkg\PassportClient\Contracts\ShouldAccessTokenContract;
-use XsPkg\PassportClient\Contracts\HttpResponseContract;
-use XsPkg\PassportClient\Http\HttpRequest;
+use XsKit\PassportClient\Contracts\ShouldAccessTokenContract;
+use XsKit\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Http\HttpRequest;
 
 /**
  * 访问令牌授权
  * Class Authorize
- * @package XsPkg\ClientFacade\Grant
+ * @package XsKit\ClientFacade\Grant
  */
 class Authorize implements ShouldAccessTokenContract
 {

@@ -6,7 +6,7 @@
  * Time: 9:42
  */
 
-namespace XsPkg\PassportClient\Exceptions;
+namespace XsKit\PassportClient\Exceptions;
 
 
 class HttpRequestException extends \RuntimeException

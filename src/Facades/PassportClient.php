@@ -6,23 +6,23 @@
  * Time: 14:29
  */
 
-namespace XsPkg\PassportClient\Facades;
+namespace XsKit\PassportClient\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
-use XsPkg\PassportClient\Contracts\ApiContract;
-use XsPkg\PassportClient\Contracts\HttpRequestAsyncContract;
-use XsPkg\PassportClient\Contracts\HttpRequestContract;
-use XsPkg\PassportClient\Contracts\HttpResponseContract;
-use XsPkg\PassportClient\Grant\Authorize;
-use XsPkg\PassportClient\Grant\Machine;
-use XsPkg\PassportClient\Grant\Password;
-use XsPkg\PassportClient\Client;
+use XsKit\PassportClient\Contracts\ApiContract;
+use XsKit\PassportClient\Contracts\HttpRequestAsyncContract;
+use XsKit\PassportClient\Contracts\HttpRequestContract;
+use XsKit\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Grant\Authorize;
+use XsKit\PassportClient\Grant\Machine;
+use XsKit\PassportClient\Grant\Password;
+use XsKit\PassportClient\Client;
 
 /**
  * Class ClientFacade
- * @package XsPkg\PassportClient\Facades
+ * @package XsKit\PassportClient\Facades
  *
  * @method static Client driver(string $name) 设置当前驱动
  * @method static string getDriver() 返回当前驱动名

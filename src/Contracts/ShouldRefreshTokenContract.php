@@ -6,7 +6,7 @@
  * Time: 15:14
  */
 
-namespace XsPkg\PassportClient\Contracts;
+namespace XsKit\PassportClient\Contracts;
 
 
 interface ShouldRefreshTokenContract

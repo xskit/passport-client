@@ -6,12 +6,12 @@
  * Time: 9:58
  */
 
-namespace XsPkg\PassportClient\Http;
+namespace XsKit\PassportClient\Http;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\RequestInterface;
-use XsPkg\PassportClient\Exceptions\HttpRequestException;
+use XsKit\PassportClient\Exceptions\HttpRequestException;
 
 abstract class AbstractRequest
 {

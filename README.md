@@ -3,12 +3,12 @@
 ## 功能：
 - 简单的获取服务授权的凭证和 API请求
 - 支持自定义处理返回的数据的响应
-- 自定义 SDK 的请求的包装，需要实现 `XsPkg\Contracts\ApiContract` 接口
+- 自定义 SDK 的请求的包装，需要实现 `XsKit\Contracts\ApiContract` 接口
 - 支持 同步 或 异步 请求 API服务，可根据 accessToken 访问授权的 api （推荐使用RESTFull 风格的接口）
 
 ## 安装
 ```bash
-composer require xspkg/passport-client
+composer require xskit/passport-client
 ```
 ## 使用
 
@@ -22,10 +22,10 @@ $ php artisan vendor:publish --tag=passport-client-config
 
 ### 引入PassportClient 实例
 有两种方式：
-1. 首先通过容器依赖注入`\XsPkg\PassportClient\Client`
+1. 首先通过容器依赖注入`\XsKit\PassportClient\Client`
 2. PassportClient Facade 静态调用的方式使用
 
-大部分请求都返回 实现了 `\XsPkg\PassportClient\ContractsHttpResponseContract` 的实例 
+大部分请求都返回 实现了 `\XsKit\PassportClient\ContractsHttpResponseContract` 的实例 
 
 ### 使用 Facade 的说明
 
@@ -44,17 +44,17 @@ PassportClient::driver($name);
 return PassportClient::grantAuthorize()->redirect();
 // 将授权码转换为访问令牌
 $response = PassportClient::grantAuthorize()->setCode($code)->accessToken();
-// $response 是一个实现了 \XsPkg\PassportClient\ContractsHttpResponseContract 的实例
+// $response 是一个实现了 \XsKit\PassportClient\ContractsHttpResponseContract 的实例
 ```
 - 机器授权令牌
 ```php
 $response = PassportClient::grantMachine()->accessToken();
-// $response 是一个实现了 \XsPkg\PassportClient\ContractsHttpResponseContract 的实例
+// $response 是一个实现了 \XsKit\PassportClient\ContractsHttpResponseContract 的实例
 ```
 - 获取密码授权令牌
 ```php
 $response = PassportClient::grantPassword()->signIn($username,$password)->accessToken();
-// $response 是一个实现了 \XsPkg\PassportClient\ContractsHttpResponseContract 的实例
+// $response 是一个实现了 \XsKit\PassportClient\ContractsHttpResponseContract 的实例
 
 ```
 #### 一、快速请求
@@ -88,10 +88,10 @@ PassportClient::send(new Request('GET','url'));
 
 PassportClient::sendAsync(new Request('GET','url'));
 ```
-- query() 方法参数说明
+- query() 方法参数说明  
 这里有一些关于 base_uri 的快速例子：
 
-|base_uri|	     query(URI)|        	Result|
+|base_uri|	     query(URI)|        	结果|
 |:--------|:----------|:--------------------- |
 |http://foo.com	| /bar |	http://foo.com/bar|
 |http://foo.com/foo | /bar |http://foo.com/bar|
@@ -104,7 +104,7 @@ PassportClient::sendAsync(new Request('GET','url'));
 - 创建自己的业务api  
 例如 创建  RestFULL风格的个人信息 SDK
 
-一、 创建一个 实现 `XsPkg\Contracts\ApiContract` 的类，比如这样:
+一、 创建一个 实现 `XsKit\Contracts\ApiContract` 的类，比如这样:
 ```php
 class UserInfo implements ApiContract
 {
@@ -169,7 +169,7 @@ PassportClient::request(new UserInfo())->param(['username' => 'account','passwor
 
 #### 三、 使用 PSR-7 Request `GuzzleHttp\Psr7\Request`
 ```php 
-//同步，返回 XsPkg\PassportClient\Contracts\HttpResponseContract
+//同步，返回 XsKit\PassportClient\Contracts\HttpResponseContract
 PassportClient::send(new Request('GET'),['timeout' => 2]) : HttpResponseContract;
 
 // 异步 
@@ -180,19 +180,19 @@ PassportClient::sendAsync(new Request('POST'),callable $onFulfilled,callable $on
 ```
 
 #### 请求响应说明
-`\XsPkg\PassportClient\Http\HttpResponse` 实现了 `\XsPkg\PassportClient\ContractsHttpResponseContract`
+`\XsKit\PassportClient\Http\HttpResponse` 实现了 `\XsKit\PassportClient\ContractsHttpResponseContract`
 ```php
 // 判断请求是否成功
 $response->isOk();
 // 自定义判断请求是否成功,回调返回 true 时 isOk() 返回true
-$response->isOk(function(\XsPkg\PassportClient\Http\HttpResponse $response){
+$response->isOk(function(\XsKit\PassportClient\Http\HttpResponse $response){
     $response->getResponse(); //获取 PSR-7 response 实例,请求失败时为null
     $response->getException(); //获取 GuzzleHttp\Exception\TransferException 异常，请求成功时为 null
 });
 // 判断请求是否失败,失败时，返回 true
 $response->isErr();
 //回调返回 false 时 isErr 返回 true
-$response->isErr(function(\XsPkg\PassportClient\Http\HttpResponse $response){
+$response->isErr(function(\XsKit\PassportClient\Http\HttpResponse $response){
       $response->getResponse(); //获取 PSR-7 response 实例,请求失败时为null
       $response->getException(); //获取 GuzzleHttp\Exception\TransferException 异常，请求成功时为 null
   });
@@ -237,7 +237,7 @@ $response->getResponse()->getCode()
 * 自定义解析服务端返回数据配置： `response_handle` 配置项为一个 Closure类函数，对响应数据的控制，如下：
 ```php
 // 自定义响应数据的处理
-// 可配置一个匿名函数,函数可用$this 指向是 XsPkg\PassportClient\Http\HttpResponse 响应实例
+// 可配置一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
 // 该函数接收一个 Psr\Http\Message\ResponseInterface 响应实例
 'response_handle' => function (\Psr\Http\Message\ResponseInterface $response) {
     if (isset($this->data['data'], $this->data['status'], $this->data['code'])) {

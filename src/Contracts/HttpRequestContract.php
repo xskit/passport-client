@@ -6,11 +6,11 @@
  * Time: 14:44
  */
 
-namespace XsPkg\PassportClient\Contracts;
+namespace XsKit\PassportClient\Contracts;
 
 /**
  * Interface HttpRequestContract
- * @package XsPkg\PassportClient\Contracts
+ * @package XsKit\PassportClient\Contracts
  */
 interface HttpRequestContract
 {

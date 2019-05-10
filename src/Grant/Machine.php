@@ -6,16 +6,16 @@
  * Time: 15:24
  */
 
-namespace XsPkg\PassportClient\Grant;
+namespace XsKit\PassportClient\Grant;
 
 use Illuminate\Support\Arr;
-use XsPkg\PassportClient\Contracts\ShouldAccessTokenContract;
-use XsPkg\PassportClient\Http\HttpRequest;
+use XsKit\PassportClient\Contracts\ShouldAccessTokenContract;
+use XsKit\PassportClient\Http\HttpRequest;
 
 /**
  * 机器对机器授权
  * Class Machine
- * @package XsPkg\ClientFacade\Grant
+ * @package XsKit\ClientFacade\Grant
  */
 class Machine implements ShouldAccessTokenContract
 {
