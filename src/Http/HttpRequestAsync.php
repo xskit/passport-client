@@ -23,9 +23,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function getAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function get(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync('GET', $onFulfilled, $onRejected);
+        return $this->send('GET', $onFulfilled, $onRejected);
     }
 
     /**
@@ -33,9 +33,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function postAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function post(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync($onFulfilled, $onRejected,'GET');
+        return $this->send($onFulfilled, $onRejected, 'GET');
     }
 
     /**
@@ -43,9 +43,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function putAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function put(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync($onFulfilled, $onRejected,'PUT');
+        return $this->send($onFulfilled, $onRejected, 'PUT');
     }
 
     /**
@@ -53,9 +53,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function deleteAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function delete(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync($onFulfilled, $onRejected,'DELETE');
+        return $this->send($onFulfilled, $onRejected, 'DELETE');
     }
 
     /**
@@ -63,9 +63,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function optionsAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function options(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync($onFulfilled, $onRejected,'OPTIONS');
+        return $this->send($onFulfilled, $onRejected, 'OPTIONS');
     }
 
     /**
@@ -73,9 +73,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function headAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function head(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync($onFulfilled, $onRejected,'HEAD');
+        return $this->send($onFulfilled, $onRejected, 'HEAD');
     }
 
     /**
@@ -83,18 +83,18 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      * @param callable|null $onRejected
      * @return $this
      */
-    public function patchAsync(callable $onFulfilled = null, callable $onRejected = null)
+    public function patch(callable $onFulfilled = null, callable $onRejected = null)
     {
-        return $this->sendAsync($onFulfilled, $onRejected,'PATCH');
+        return $this->send($onFulfilled, $onRejected, 'PATCH');
     }
 
     /**
-     * @param $method
      * @param callable|null $onFulfilled
      * @param callable|null $onRejected
+     * @param string $method
      * @return $this
      */
-    public function sendAsync(callable $onFulfilled = null, callable $onRejected = null,$method = '')
+    public function send(callable $onFulfilled = null, callable $onRejected = null, $method = '')
     {
         $httpResponse = new HttpResponse();
 

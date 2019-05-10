@@ -40,4 +40,10 @@ interface ApiContract
      * @return string
      */
     public function token();
+
+    /**
+     * 返回 请求方式
+     * @return string
+     */
+    public function method();
 }

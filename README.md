@@ -57,7 +57,38 @@ $response = PassportClient::grantPassword()->signIn($username,$password)->access
 // $response 是一个实现了 \XsPkg\PassportClient\ContractsHttpResponseContract 的实例
 
 ```
-#### 使用token 访问授权API
+#### 快速请求
+```php
+//支持的请求
+PassportClient::request()->get();
+PassportClient::request()->post();
+PassportClient::request()->put();
+PassportClient::request()->delete();
+PassportClient::request()->head();
+PassportClient::request()->patch();
+PassportClient::request()->options();
+
+//带参数的post 请求
+PassportClient::request()->query('api/info')->param(['key1'=>'value1','key2'=>'value2'])->post();
+PassportClient::request()->query('api/info')->param('key','value')->post();
+
+//修改配置的 base_uid 选项
+PassportClient::request(http://example.com)->query('api/info')->get();
+PassportClient::request()->baseUri(http://example.com)->query('api/info')->get();
+//带授权凭证的访问
+PassportClient::request()->query('api/info')->token('你的凭证')->get();
+
+//异步请求功能同上,修改如下
+PassportClient::requestAsync()->get();
+PassportClient::requestAsync()->get(callable $onFulfilled);
+PassportClient::requestAsync()->get(callable $onFulfilled, callable $onRejected);
+
+//PSR-7 请求对象的使用
+PassportClient::send(new Request('GET'));
+
+PassportClient::sendAsync(new Request('GET'));
+```
+#### API 的封装
 - 创建自己的业务api  
 例如 创建  RestFULL风格的个人信息 SDK
 
@@ -73,6 +104,13 @@ class UserInfo implements ApiContract
             //服务端 API 接口路由地址
             return '/api/user_info'
         }
+        /**
+         * 返回 请求方式
+         */
+        public function method(){
+            return 'GET';
+        }
+        
        /**
         * 返回 要修改的 基础 uri， 使用配置文件可以返回 void
         * @return string|void
@@ -86,7 +124,7 @@ class UserInfo implements ApiContract
          * @return array
          */
         public function param(){
-            //不需要可以为空，可稍后动态调用 HttpRequest 实例的 param()方法 替换 和 新增 参数
+            //不需要可以为空，也可稍后动态调用 HttpRequest 实例的 param()方法 替换 和 新增 参数
         }
     
         /**
@@ -94,7 +132,7 @@ class UserInfo implements ApiContract
          * @return string
          */
         public function token(){
-            //不需要可以为空，可稍后动态调用 HttpRequest 实例的 token()方法 设置
+            //不需要可以为空，也可稍后动态调用 HttpRequest 实例的 token()方法 设置
         }
 }
 ```
@@ -103,6 +141,9 @@ class UserInfo implements ApiContract
 // RestFull
 //新增用户,同步 POST 请求,并设置 Guzzle 请求选项
 PassportClient::request(new UserInfo(),['timeout' => 2])->param(['username' => 'account','password' => 'secret'])->post();
+//如果 Userinfo 不需要动态修改参数和请求方法，可以更简单的发启请求
+PassportClient::api(new UserInfo(),['timeout' => 2]);
+
 //如果要异步 POST 请求，只需要把 request 换成 requestAsync
 PassportClient::requestAsync(new UserInfo())->param(['username' => 'account','password' => 'secret'])->post();
 // 获取用户信息

@@ -36,19 +36,19 @@ interface HttpRequestAsyncContract
      * @param callable|null $onRejected
      * @return $this
      */
-    public function getAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function get(callable $onFulfilled = null, callable $onRejected = null);
 
-    public function postAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function post(callable $onFulfilled = null, callable $onRejected = null);
 
-    public function putAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function put(callable $onFulfilled = null, callable $onRejected = null);
 
-    public function deleteAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function delete(callable $onFulfilled = null, callable $onRejected = null);
 
-    public function optionsAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function options(callable $onFulfilled = null, callable $onRejected = null);
 
-    public function headAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function head(callable $onFulfilled = null, callable $onRejected = null);
 
-    public function patchAsync(callable $onFulfilled = null, callable $onRejected = null);
+    public function patch(callable $onFulfilled = null, callable $onRejected = null);
 
     public function promise(): PromiseInterface;
 }

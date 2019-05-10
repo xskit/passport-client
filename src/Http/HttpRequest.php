@@ -81,7 +81,7 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
     public function upload(): HttpResponseContract
     {
         $this->guzzleOptions['body'] = $this->param;
-        return $this->send('HEAD');
+        return $this->send('POST');
     }
 
     /**

@@ -47,6 +47,18 @@ abstract class AbstractRequest
     }
 
     /**
+     * 设置基本地址
+     * @param $base_uri
+     * @return $this
+     */
+    public function baseUri($base_uri)
+    {
+        $this->baseUri = $base_uri;
+        return $this;
+    }
+
+    /**
+     * 设置路由
      * @param $url
      * @return $this
      */
