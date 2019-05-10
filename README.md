@@ -72,7 +72,7 @@ PassportClient::request()->options();
 PassportClient::request()->query('api/info')->param(['key1'=>'value1','key2'=>'value2'])->post();
 PassportClient::request()->query('api/info')->param('key','value')->post();
 
-//修改配置的 base_uid 选项
+//修改配置的 base_uri 选项
 PassportClient::request('http://example.com')->query('api/info')->get();
 PassportClient::request()->baseUri('http://example.com')->query('api/info')->get();
 //带授权凭证的访问
