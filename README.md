@@ -151,6 +151,8 @@ $response->getMessage();//消息
 //获取原数据体
 $response->getBody();
 ```
+// 获取响应数据
+$response->getData();
 
 #### 如果接收到的数据是 可转换为 array 类型时,可以使用以下方法
 
