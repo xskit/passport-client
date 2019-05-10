@@ -88,6 +88,18 @@ PassportClient::send(new Request('GET','url'));
 
 PassportClient::sendAsync(new Request('GET','url'));
 ```
+- query() 方法参数说明
+这里有一些关于 base_uri 的快速例子：
+
+|base_uri|	     query(URI)|        	Result|
+|:--------|:----------|:--------------------- |
+|http://foo.com	| /bar |	http://foo.com/bar|
+|http://foo.com/foo | /bar |http://foo.com/bar|
+|http://foo.com/foo | bar |http://foo.com/bar|
+|http://foo.com/foo/ |	bar	|http://foo.com/foo/bar|
+|http://foo.com	| http://baz.com	| http://baz.com|
+|http://foo.com/?bar|	bar	| http://foo.com/bar|
+
 #### 二、API 的封装
 - 创建自己的业务api  
 例如 创建  RestFULL风格的个人信息 SDK
