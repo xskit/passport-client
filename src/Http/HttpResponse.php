@@ -128,7 +128,7 @@ class HttpResponse implements HttpResponseContract
 
     /**
      * 返回 状态码
-     * @return mixed
+     * @return int
      */
     public function getCode()
     {
@@ -137,11 +137,20 @@ class HttpResponse implements HttpResponseContract
 
     /**
      * 返回 消息
-     * @return mixed
+     * @return string
      */
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * 返回 数据
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
