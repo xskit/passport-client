@@ -20,10 +20,12 @@ interface HttpRequestAsyncContract
     public function query($value);
 
     /**
+     * 设置查询参数
+     * @param string|array $key
      * @param array $value
      * @return $this
      */
-    public function param(array $value);
+    public function param($key, $value = null);
 
     /**
      * @param string $value 凭证
