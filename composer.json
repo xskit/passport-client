@@ -1,6 +1,6 @@
 {
   "name": "xskit/passport-client",
-  "description": "基于lararvel passport 的授权访问的客户端",
+  "description": "An authorized client based on the lararvel passport",
   "keywords": [
     "passport",
     "oauth",
