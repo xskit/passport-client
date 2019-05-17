@@ -157,6 +157,8 @@ class UserInfo implements ApiContract
 //新增用户,同步 POST 请求,并设置 Guzzle 请求选项
 PassportClient::request(new UserInfo(),['timeout' => 2])->param(['username' => 'account','password' => 'secret'])->post();
 //如果 Userinfo 不需要动态修改参数和请求方法，可以更简单的发启请求
+PassportClient::api(new UserInfo());
+//修改默认 guzzle 请求选项
 PassportClient::api(new UserInfo(),['timeout' => 2]);
 
 //如果要异步 POST 请求，只需要把 request 换成 requestAsync
