@@ -244,11 +244,6 @@ $response->getResponse()->getCode()
 // 自定义响应数据的处理
 // 可配置一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
 // 该函数接收一个 Psr\Http\Message\ResponseInterface 响应实例
-'response_handle' => function (\Psr\Http\Message\ResponseInterface $response) {
-    if (isset($this->data['data'], $this->data['status'], $this->data['code'])) {
-        $this->data = $this->data['data'];
-        $this->code = $this->data['code'];
-        $this->message = $this->data['status'];
-    }
-},
+// 默认配置为
+'response_handle' => XsKit\PassportClient\Http\ResponseHandle::class,
 ```

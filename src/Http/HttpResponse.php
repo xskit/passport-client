@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use XsKit\PassportClient\Contracts\HttpResponseContract;
+use XsKit\PassportClient\Contracts\ResponseHandleContract;
 
 class HttpResponse implements HttpResponseContract
 {
@@ -44,6 +45,11 @@ class HttpResponse implements HttpResponseContract
         self::$responseHandle = $closure;
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @return $this
+     * @throws \ReflectionException
+     */
     public function receive(ResponseInterface $response)
     {
         $this->response = $response;
@@ -58,14 +64,15 @@ class HttpResponse implements HttpResponseContract
             $this->data = Arr::wrap(empty($data) ? null : $data);
         }
 
-        //处理自定义响应配置
-        $closure = Config::get('passport_client.response_handle', function (ResponseInterface $response) {
-            if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
-                $this->data = $this->data['data'];
-                $this->code = $this->data['code'];
-                $this->message = $this->data['message'];
-            }
-        });
+        //处理响应数据
+        $handleClass = Config::get('passport_client.response_handle', ResponseHandle::class);
+
+        if (!class_exists($handleClass) || !(new \ReflectionClass($handleClass))->implementsInterface(ResponseHandleContract::class)) {
+            throw new \LogicException(sprintf('The response_handle option has to be valid class that implements "%s"', ResponseHandleContract::class));
+        }
+
+        $closure = $handleClass::parseData();
+
         if ($closure instanceof \Closure) {
             $closure->call($this, $response);
         }
