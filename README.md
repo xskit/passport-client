@@ -247,3 +247,23 @@ $response->getResponse()->getCode()
 // 默认配置为
 'response_handle' => XsKit\PassportClient\Http\ResponseHandle::class,
 ```
+例如，写一个这样的自定义响应数据处理类,做为 `response_handle` 默认配置项的替换：
+```php
+use XsKit\PassportClient\Contracts\ResponseHandleContract;
+
+class ResponseHandle implements ResponseHandleContract
+{
+
+    public static function parseData(): \Closure
+    {
+        return function (\Psr\Http\Message\ResponseInterface $response) {
+            if (isset($this->data['data'], $this->data['status'], $this->data['code'])) {
+                $this->data = $this->data['data'];
+                $this->code = $this->data['code'];
+                $this->message = $this->data['status'];
+            }
+        };
+    }
+
+}
+```
