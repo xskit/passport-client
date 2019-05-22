@@ -241,8 +241,8 @@ $response->getResponse()->getCode()
 }
 * 自定义解析服务端返回数据配置： `response_handle` 配置项为一个 Closure类函数，对响应数据的控制，如下：
 ```php
-// 自定义响应数据的处理
-// 可配置一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
+// 可配置 自定义现实 XsKit\PassportClient\Contracts\ResponseHandleContract 接口的响应数据的处理类
+// 处理类返回一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
 // 该函数接收一个 Psr\Http\Message\ResponseInterface 响应实例
 // 默认配置为
 'response_handle' => XsKit\PassportClient\Http\ResponseHandle::class,

@@ -8,7 +8,6 @@
 
 namespace XsKit\PassportClient\Contracts;
 
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * 响应的处理
