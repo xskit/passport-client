@@ -260,6 +260,7 @@ class ResponseHandle implements ResponseHandleContract
             if (isset($this->data['data'], $this->data['status'], $this->data['code'])) {
                 $this->data = $this->data['data'];
                 $this->code = $this->data['code'];
+                //与默认处理不一样的地方
                 $this->message = $this->data['status'];
             }
         };
