@@ -239,7 +239,7 @@ $response->getResponse()->getCode()
     "code":"状态码",
     "message":"消息"
 }
-* 自定义解析服务端返回数据配置： `response_handle` 配置项为一个 Closure类函数，对响应数据的控制，如下：
+* 自定义解析服务端返回数据配置： `response_handle` 配置项为一个现实 XsKit\PassportClient\Contracts\ResponseHandleContract 接口的响应数据的处理类，对响应数据的控制，如下：
 ```php
 // 可配置 自定义现实 XsKit\PassportClient\Contracts\ResponseHandleContract 接口的响应数据的处理类
 // 处理类返回一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
