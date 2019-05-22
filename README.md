@@ -184,7 +184,7 @@ PassportClient::send(new Request('GET'),['timeout' => 2]) : HttpResponseContract
 PassportClient::sendAsync(new Request('POST'),callable $onFulfilled,callable $onRejected, array $guzzle = []):PromiseInterface
 ```
 
-#### 请求响应说明
+### 请求响应说明
 `\XsKit\PassportClient\Http\HttpResponse` 实现了 `\XsKit\PassportClient\ContractsHttpResponseContract`
 ```php
 // 判断请求是否成功
@@ -196,7 +196,7 @@ $response->isOk(function(\XsKit\PassportClient\Http\HttpResponse $response){
 });
 // 判断请求是否失败,失败时，返回 true
 $response->isErr();
-//回调返回 false 时 isErr 返回 true
+// 定义自定义回调处理响应，返回 false 时 isErr() 返回 true
 $response->isErr(function(\XsKit\PassportClient\Http\HttpResponse $response){
       $response->getResponse(); //获取 PSR-7 response 实例,请求失败时为null
       $response->getException(); //获取 GuzzleHttp\Exception\TransferException 异常，请求成功时为 null
@@ -228,18 +228,33 @@ foreach($response as $item){
 
 ```
 
-- 可以通过 PSR-7 response 实例，获取 http 请求信息，比如获取请求状态码
-```php
-$response->getResponse()->getCode()
-```
+- 可以通过 PSR-7 Response 实例，获取 Http 请求信息，比如获取请求状态码
 
-* 服务端返回数据为json 字符串时， 数据的默认键名 code、 message 和 data 时，可以修改对应 getCode(),getMessage()和toArray() 的值,如下:
-{
-    "data":"数据实体"，
+  ```php
+  $response->getResponse()->getCode()
+  ```
+
+  
+* 服务端返回数据为 json 字符串时， 数据的默认键名 code、 message 和 data 时，获取对应方法为 getCode() , getMessage() 和 getData() 或 toArray() 的值,如下:
+
+  ```json
+  {
+    "data":"数据实体",
     "code":"状态码",
     "message":"消息"
-}
-* 自定义解析服务端返回数据配置： `response_handle` 配置项为一个现实 XsKit\PassportClient\Contracts\ResponseHandleContract 接口的响应数据的处理类，对响应数据的控制，如下：
+  }
+  ```
+
+  ```php
+  $response->getData();    //返回：数据实体
+  $response->toArray();    //返回：数据实体（数组类型）
+  $response->getCode();    //返回：状态码
+  $response->getMessage(); // 返回：消息
+  ```
+
+  
+
+* 自定义解析服务端返回数据配置： `response_handle` 配置项为一个现实 `XsKit\PassportClient\Contracts\ResponseHandleContract `接口的响应数据的处理类，对响应数据的控制，如下：
 ```php
 // 可配置 自定义现实 XsKit\PassportClient\Contracts\ResponseHandleContract 接口的响应数据的处理类
 // 处理类返回一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
