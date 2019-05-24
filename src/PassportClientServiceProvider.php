@@ -8,9 +8,13 @@ class PassportClientServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/config/passport_client.php' => config_path('passport_client.php'),
-        ], 'passport-client-config');
+
+        if (method_exists($this, 'publishes') && function_exists('config_path')) {
+            $this->publishes([
+                __DIR__ . '/config/passport_client.php' => config_path('passport_client.php'),
+            ], 'passport-client-config');
+        }
+
     }
 
     public function register()
