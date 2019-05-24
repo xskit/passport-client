@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use XsKit\PassportClient\Contracts\HttpResponseContract;
 use XsKit\PassportClient\Contracts\ResponseHandleContract;
