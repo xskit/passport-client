@@ -17,11 +17,9 @@ class ResponseHandle implements ResponseHandleContract
     public static function parseData(): \Closure
     {
         return function (ResponseInterface $response) {
-            if (isset($this->data['data'], $this->data['message'], $this->data['code'])) {
-                $this->data = $this->data['data'];
-                $this->code = $this->data['code'];
-                $this->message = $this->data['message'];
-            }
+            isset($this->data['data']) and $this->data = $this->data['data'];
+            isset($this->data['code']) and $this->code = $this->data['code'];
+            isset($this->data['message']) and $this->message = $this->data['message'];
         };
     }
 }
