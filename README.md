@@ -265,8 +265,8 @@ foreach($response as $item){
 // 可配置 自定义现实 XsKit\PassportClient\Contracts\ResponseHandleContract 接口的响应数据的处理类
 // 处理类返回一个匿名函数,函数可用$this 指向是 XsKit\PassportClient\Http\HttpResponse 响应实例
 // 该函数接收一个 Psr\Http\Message\ResponseInterface 响应实例
-// 默认配置为
-'response_handle' => XsKit\PassportClient\Http\ResponseHandle::class,
+// 默认配置为 null 时，默认处理类 XsKit\PassportClient\Http\ResponseHandle::class
+'response_handle' => null,
 ```
 例如，写一个这样的自定义响应数据处理类,做为 `response_handle` 默认配置项的替换：
 ```php
@@ -274,16 +274,12 @@ use XsKit\PassportClient\Contracts\ResponseHandleContract;
 
 class ResponseHandle implements ResponseHandleContract
 {
-
     public static function parseData(): \Closure
     {
         return function (\Psr\Http\Message\ResponseInterface $response) {
-            if (isset($this->data['data'], $this->data['status'], $this->data['code'])) {
-                $this->data = $this->data['data'];
-                $this->code = $this->data['code'];
-                //与默认处理不一样的地方
-                $this->message = $this->data['status'];
-            }
+            isset($this->data['data']) and $this->data = $this->data['data'];
+            isset($this->data['code']) and $this->code = $this->data['code'];
+            isset($this->data['message']) and $this->message = $this->data['message'];
         };
     }
 
