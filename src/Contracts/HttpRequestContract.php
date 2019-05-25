@@ -14,6 +14,11 @@ namespace XsKit\PassportClient\Contracts;
  */
 interface HttpRequestContract
 {
+    /**
+     * 设置查询url
+     * @param string $value
+     * @return $this
+     */
     public function query($value);
 
     /**
@@ -25,7 +30,7 @@ interface HttpRequestContract
     public function param($key, $value = null);
 
     /**
-     * @param $value
+     * @param string $value
      * @return $this
      */
     public function token($value);
