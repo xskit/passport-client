@@ -32,8 +32,8 @@ use XsKit\PassportClient\Client;
  * @method static Machine grantMachine() 机器授权方式
  * @method static Password grantPassword() 密码授权方式
  * @method static HttpResponseContract refreshToken(string $token) 使用刷新凭证去刷新访问授权凭证
- * @method static HttpRequestContract request(ApiContract $api, array $guzzle = []) api请求
- * @method static HttpRequestAsyncContract requestAsync(ApiContract $api, array $guzzle = []) api异步请求
+ * @method static HttpRequestContract request(ApiContract $api = null, array $guzzle = []) api请求
+ * @method static HttpRequestAsyncContract requestAsync(ApiContract $api = null, array $guzzle = []) api异步请求
  * @method static HttpResponseContract api(ApiContract $api, array $guzzle = [])使用 api实例 发启异步请求
  * @method static HttpResponseContract apiAsync(ApiContract $api, $onFulfilled, $onRejected, array $guzzle = [])使用 api实例 发启请求
  * @method static HttpResponseContract send(RequestInterface $request, array $guzzle = []) psr-7 请求
