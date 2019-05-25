@@ -13,22 +13,21 @@ composer require xskit/passport-client
 ## 引入
 ### Laravel
 安装后使用 Laravel 自动发现,包将自动注册自己。
-### Lumen
-对于Lumen的使用，服务提供者应该手动注册，`bootstrap/app.php` 如下面所示:
-```php
-$app->register(\XsKit\PassportClient\PassportClientServiceProvider::class);
-```
 
-### 配置
 发布配置文件
 ```bash
 $ php artisan vendor:publish --tag=passport-client-config
 # 如果已经有配置文件，强制覆盖配置
 $ php artisan vendor:publish --tag=passport-client-config --force
-
 ```
+### Lumen
+对于Lumen的使用，服务提供者应该手动注册，`bootstrap/app.php` 如下面所示:
+```php
+$app->register(\XsKit\PassportClient\PassportClientServiceProvider::class);
+```
+手动复制配置文件 `passport_clinet.php` 到 config 目录下。
 
-只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要 `config/passport_client.php` 配置目录,添加 其它 驱动配置
+> 只有一个服务端时，使用 `.env` 配置就可以了，要是有多个，需要 `config/passport_client.php` 配置目录,添加 其它 驱动配置
 
 ### 引入PassportClient 实例
 有两种方式：
