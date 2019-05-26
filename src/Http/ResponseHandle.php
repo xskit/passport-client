@@ -19,7 +19,7 @@ class ResponseHandle implements ResponseHandleContract
     {
         return function (ResponseInterface $response) {
             $this->code = Arr::get($this->data, 'code', $response->getStatusCode());
-            $this->message = Arr::get($this->data, 'message', Arr::get($this->data, 'status', $response->getReasonPhrase()));
+            $this->message = Arr::get($this->data, 'message',  $response->getReasonPhrase());
             $this->data = Arr::get($this->data, 'data', $this->data);
         };
     }
