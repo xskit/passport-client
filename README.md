@@ -277,9 +277,9 @@ class ResponseHandle implements ResponseHandleContract
     public static function parseData(): \Closure
     {
         return function (\Psr\Http\Message\ResponseInterface $response) {
-            isset($this->data['data']) and $this->data = $this->data['data'];
-            isset($this->data['code']) and $this->code = $this->data['code'];
-            isset($this->data['message']) and $this->message = $this->data['message'];
+             $this->code = Arr::get($this->data, 'code', $response->getStatusCode());
+             $this->message = Arr::get($this->data, 'message', Arr::get($this->data, 'status', $response->getReasonPhrase()));
+             $this->data = Arr::get($this->data, 'data', $this->data);
         };
     }
 
