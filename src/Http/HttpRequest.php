@@ -90,16 +90,16 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
      */
     public function send($method = ''): HttpResponseContract
     {
-        $httpResponse = new HttpResponse();
+        $httpResponse = new HttpResponse($this->options);
         try {
             if ($this->request) {
-                $res = $this->client->send($this->request);
+                $res = $this->http->send($this->request);
             } else {
-                $res = $this->client->request($method, $this->query, $this->guzzleOptions);
+                $res = $this->http->request($method, $this->query, $this->guzzleOptions);
             }
 
             $httpResponse->receive($res);
-        } catch (GuzzleException  $e) {
+        } catch (GuzzleException|\ReflectionException  $e) {
             $httpResponse->throwException($e);
         } finally {
             return $httpResponse;

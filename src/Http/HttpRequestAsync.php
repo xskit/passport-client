@@ -99,9 +99,9 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
         $httpResponse = new HttpResponse();
 
         if ($this->request) {
-            $this->promise = $this->client->sendAsync($this->request);
+            $this->promise = $this->http->sendAsync($this->request);
         } else {
-            $this->promise = $this->client->requestAsync($method, $this->query, $this->guzzleOptions);
+            $this->promise = $this->http->requestAsync($method, $this->query, $this->guzzleOptions);
         }
 
         $this->promise->then(function (ResponseInterface $res) use ($httpResponse, $onFulfilled) {

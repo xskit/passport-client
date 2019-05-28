@@ -10,6 +10,8 @@ namespace XsKit\PassportClient\Grant;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use XsKit\PassportClient\Client;
+use XsKit\PassportClient\ClientOptions;
 use XsKit\PassportClient\Contracts\ShouldAccessTokenContract;
 use XsKit\PassportClient\Contracts\HttpResponseContract;
 use XsKit\PassportClient\Http\HttpRequest;
@@ -21,17 +23,17 @@ use XsKit\PassportClient\Http\HttpRequest;
  */
 class Authorize implements ShouldAccessTokenContract
 {
-
-    private $baseUrl;
+    private $options;
 
     private $config;
 
     private $code;
 
-    public function __construct($base_url, $config)
+    public function __construct(ClientOptions $options)
     {
-        $this->baseUrl = $base_url;
-        $this->config = $config;
+        $this->options = $options;
+
+        $this->config = $options->getAll();
     }
 
     public function setCode($code)
@@ -46,11 +48,11 @@ class Authorize implements ShouldAccessTokenContract
      */
     public function accessToken()
     {
-        $client = new HttpRequest($this->baseUrl, Arr::get($this->config, 'guzzle_options', []));
+        $client = new HttpRequest($this->options);
         return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'authorization_code',
-            'client_id' => Arr::get($this->config, 'client_id'),
-            'client_secret' => Arr::get($this->config, 'client_secret'),
+            'client_id' => Arr::get($this->config, 'authorize_grant.client_id'),
+            'client_secret' => Arr::get($this->config, 'authorize_grant.client_secret'),
             'redirect_uri' => Arr::get($this->config, 'authorize_grant.redirect_uri'),
             'code' => $this->code,
         ])->post();
@@ -63,7 +65,7 @@ class Authorize implements ShouldAccessTokenContract
      */
     public function redirect($implicit = false)
     {
-        return Redirect::to($this->baseUrl . '/oauth/authorize?' . http_build_query([
+        return Redirect::to($this->options->getBaseUri() . Arr::get($this->config, 'authorize_redirect') . '?' . http_build_query([
                 'client_id' => Arr::get($this->config, 'authorize_grant.client_id'),
                 'redirect_uri' => Arr::get($this->config, 'authorize_grant.redirect_uri'),
                 'response_type' => $implicit ? 'token' : 'code',

@@ -9,6 +9,7 @@
 namespace XsKit\PassportClient\Grant;
 
 use Illuminate\Support\Arr;
+use XsKit\PassportClient\ClientOptions;
 use XsKit\PassportClient\Contracts\ShouldAccessTokenContract;
 use XsKit\PassportClient\Contracts\HttpResponseContract;
 use XsKit\PassportClient\Http\HttpRequest;
@@ -19,7 +20,7 @@ use XsKit\PassportClient\Http\HttpRequest;
  */
 class Password implements ShouldAccessTokenContract
 {
-    private $baseUrl;
+    private $options;
 
     private $config;
 
@@ -27,10 +28,10 @@ class Password implements ShouldAccessTokenContract
 
     private $password;
 
-    public function __construct($base_url, $config)
+    public function __construct(ClientOptions $options)
     {
-        $this->baseUrl = $base_url;
-        $this->config = $config;
+        $this->options = $options;
+        $this->config = $options->getAll();
     }
 
     /**
@@ -54,7 +55,7 @@ class Password implements ShouldAccessTokenContract
      */
     public function accessToken()
     {
-        $client = new HttpRequest($this->baseUrl, Arr::get($this->config, 'guzzle_options', []));
+        $client = new HttpRequest($this->options);
         return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'password',
             'client_id' => Arr::get($this->config, 'password_grant.client_id'),

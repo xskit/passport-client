@@ -8,9 +8,10 @@
 
 namespace XsKit\PassportClient\Http;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as Http;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\RequestInterface;
+use XsKit\PassportClient\ClientOptions;
 use XsKit\PassportClient\Exceptions\HttpRequestException;
 
 abstract class AbstractRequest
@@ -19,31 +20,39 @@ abstract class AbstractRequest
 
     protected $guzzleOptions;
 
-    protected $client;
+    protected $http;
 
     protected $query;
 
     protected $param;
 
-    /**
-     * @var $request
-     */
+    /** @var RequestInterface $request */
     protected $request;
 
-    public function __construct($request, array $guzzle = [])
-    {
-        if (is_string($request)) {
-            $this->baseUri = $request;
-            $guzzle = [
-                    'base_uri' => $this->baseUri
-                ] + $guzzle;
-        } elseif ($request instanceof RequestInterface) {
-            $this->request = $request;
-        } else {
-            throw new HttpRequestException('The requested parameters  [' . $request . '] are not supported');
-        }
+    /** @var ClientOptions $options */
+    protected $options;
 
-        $this->client = new Client($guzzle);
+    /**
+     * AbstractRequest constructor.
+     * @param ClientOptions $options
+     * @param array $guzzle
+     */
+    public function __construct(ClientOptions $options, array $guzzle = [])
+    {
+        $this->options = $options;
+        $this->baseUri = $options->getBaseUri();
+        $setting_guzzle = $options->getGuzzleOptions();
+        $guzzle = [
+                'base_uri' => $this->baseUri
+            ] + $setting_guzzle + $guzzle;
+
+        $this->http = new Http($guzzle);
+    }
+
+    public function requestPsr7(RequestInterface $request)
+    {
+        $this->request = $request;
+        return $this;
     }
 
     /**

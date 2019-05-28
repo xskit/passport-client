@@ -9,6 +9,7 @@
 namespace XsKit\PassportClient\Grant;
 
 use Illuminate\Support\Arr;
+use XsKit\PassportClient\ClientOptions;
 use XsKit\PassportClient\Contracts\ShouldAccessTokenContract;
 use XsKit\PassportClient\Http\HttpRequest;
 
@@ -19,19 +20,19 @@ use XsKit\PassportClient\Http\HttpRequest;
  */
 class Machine implements ShouldAccessTokenContract
 {
-    private $baseUrl;
+    private $options;
 
     private $config;
 
-    public function __construct($base_url, $config)
+    public function __construct(ClientOptions $options)
     {
-        $this->baseUrl = $base_url;
-        $this->config = $config;
+        $this->options = $options;
+        $this->config = $options->getAll();
     }
 
     public function accessToken()
     {
-        $client = new HttpRequest($this->baseUrl, Arr::get($this->config, 'guzzle_options', []));
+        $client = new HttpRequest($this->options, Arr::get($this->config, 'guzzle_options', []));
         return $client->query(Arr::get($this->config, 'query'))->param([
             'grant_type' => 'client_credentials',
             'client_id' => Arr::get($this->config, 'machine_grant.client_id'),

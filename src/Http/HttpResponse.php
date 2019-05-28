@@ -13,9 +13,9 @@ use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
+use XsKit\PassportClient\ClientOptions;
 use XsKit\PassportClient\Contracts\HttpResponseContract;
 use XsKit\PassportClient\Contracts\ResponseHandleContract;
 
@@ -39,9 +39,12 @@ class HttpResponse implements HttpResponseContract
 
     protected static $responseHandle;
 
-    public static function setResponseHandle(\Closure $closure)
+    /** @var ClientOptions $options */
+    protected $options;
+
+    public function __construct(ClientOptions $options)
     {
-        self::$responseHandle = $closure;
+        $this->options = $options;
     }
 
     /**
@@ -64,7 +67,7 @@ class HttpResponse implements HttpResponseContract
         }
 
         //处理响应数据
-        $handleClass = Config::get('passport_client.response_handle', ResponseHandle::class);
+        $handleClass = $this->options->getResponseHandle();
 
         if (!class_exists($handleClass) || !(new \ReflectionClass($handleClass))->implementsInterface(ResponseHandleContract::class)) {
             throw new \LogicException(sprintf('The response_handle option has to be valid class that implements "%s"', ResponseHandleContract::class));

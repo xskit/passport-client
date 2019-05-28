@@ -28,6 +28,8 @@ class Client implements ShouldRefreshTokenContract
 
     private $driver;
 
+    protected $options = [];
+
     public function __construct($config)
     {
         $this->config = $config;
@@ -49,17 +51,24 @@ class Client implements ShouldRefreshTokenContract
         return $this->driver ?? $this->config['default'];
     }
 
-    public function getBaseUri(): string
-    {
-        return rtrim(Arr::get($this->getConfig(), 'base_uri'), '/');
-    }
-
     /**
      * @return array
      */
-    public function getConfig()
+    private function getConfig()
     {
         return Arr::get($this->config, $this->getDriver(), []);
+    }
+
+    /**
+     * 获取当前配置项
+     * @return ClientOptions
+     */
+    public function getCurrentOptions()
+    {
+        return Arr::get($this->options, $this->getDriver(), function () {
+            $options = $this->options[$this->getDriver()] = new ClientOptions($this->getConfig());
+            return $options;
+        });
     }
 
     /**
@@ -68,7 +77,7 @@ class Client implements ShouldRefreshTokenContract
      */
     public function grantAuthorize()
     {
-        return new Authorize($this->getBaseUri(), $this->getConfig());
+        return new Authorize($this->getCurrentOptions());
     }
 
     /**
@@ -77,7 +86,7 @@ class Client implements ShouldRefreshTokenContract
      */
     public function grantMachine()
     {
-        return new Machine($this->getBaseUri(), $this->getConfig());
+        return new Machine($this->getCurrentOptions());
     }
 
     /**
@@ -86,7 +95,7 @@ class Client implements ShouldRefreshTokenContract
      */
     public function grantPassword()
     {
-        return new Password($this->getBaseUri(), $this->getConfig());
+        return new Password($this->getCurrentOptions());
     }
 
     /**
@@ -96,8 +105,8 @@ class Client implements ShouldRefreshTokenContract
      */
     public function refreshToken($token)
     {
-        $client = new HttpRequest($this->getBaseUri() . Arr::get($this->getConfig(), 'query'));
-        return $client->param([
+        $client = new HttpRequest($this->getCurrentOptions());
+        return $client->query(Arr::get($this->getConfig(), 'query'))->param([
             'grant_type' => 'refresh_token',
             'refresh_token' => $token,
             'client_id' => Arr::get($this->getConfig(), 'client_id'),
@@ -108,31 +117,39 @@ class Client implements ShouldRefreshTokenContract
 
     /**
      * 发启请求
-     * @param ApiContract $api 接口对象
+     * @param ApiContract|string $api 接口对象
      * @param array $guzzle
      * @return HttpRequestContract
      */
-    public function request(ApiContract $api = null, array $guzzle = []): HttpRequestContract
+    public function request($api = null, array $guzzle = []): HttpRequestContract
     {
-        if (empty($api)) {
-            return new HttpRequest($this->getBaseUri(), $guzzle);
+        if (!$api instanceof ApiContract) {
+            $http = new HttpRequest($this->getCurrentOptions(), $guzzle);
+            if (!empty($api) && is_string($api)) {
+                $http->baseUri($api);
+            }
+            return $http;
         }
-        return $this->handleApi(new HttpRequest($api->baseUri() ?? $this->getBaseUri(), $guzzle), $api);
+        return $this->handleApi(new HttpRequest($this->getCurrentOptions(), $guzzle), $api);
     }
 
     /**
      * 发启异步请求
-     * @param ApiContract $api 接口对象
+     * @param ApiContract|string $api 接口对象
      * @param array $guzzle
      * @return HttpRequestAsyncContract
      */
-    public function requestAsync(ApiContract $api = null, array $guzzle = []): HttpRequestAsyncContract
+    public function requestAsync($api = null, array $guzzle = []): HttpRequestAsyncContract
     {
-        if (empty($api)) {
-            return new HttpRequestAsync($this->getBaseUri(), $guzzle);
+        if (!$api instanceof ApiContract) {
+            $http = new HttpRequestAsync($this->getCurrentOptions(), $guzzle);
+            if (!empty($api) && is_string($api)) {
+                $http->baseUri($api);
+            }
+            return $http;
         }
 
-        return $this->handleApi(new HttpRequestAsync($api->baseUri() ?? $this->getBaseUri(), $guzzle), $api);
+        return $this->handleApi(new HttpRequestAsync($this->getCurrentOptions(), $guzzle), $api);
     }
 
     /**
@@ -146,7 +163,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($api)) {
             throw new HttpRequestException('The required ApiContract instance is missing');
         }
-        return $this->handleApi(new HttpRequest($api->baseUri() ?? $this->getBaseUri(), $guzzle), $api)->send($api->method());
+        return $this->handleApi(new HttpRequest($this->getCurrentOptions(), $guzzle), $api)->send($api->method());
     }
 
     /**
@@ -162,7 +179,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($api)) {
             throw new HttpRequestException('The required ApiContract instance is missing');
         }
-        return $this->handleApi(new HttpRequestAsync($api->baseUri() ?? $this->getBaseUri(), $guzzle), $api)
+        return $this->handleApi(new HttpRequestAsync($this->getCurrentOptions(), $guzzle), $api)
             ->send($onFulfilled, $onRejected, $api->method())
             ->promise();
 
@@ -184,6 +201,8 @@ class Client implements ShouldRefreshTokenContract
         //修改驱动
         $api->driver() && $this->driver($api->driver());
 
+        $api->baseUri() && $http->baseUri($api->baseUri());
+
         $api->query() && $http->query($api->query());
 
         $api->param() && $http->param($api->param());
@@ -204,7 +223,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($request)) {
             throw new HttpRequestException('The required RequestInterface instance is missing');
         }
-        return (new HttpRequest($request, $guzzle))->send();
+        return (new HttpRequest($this->getCurrentOptions(), $guzzle))->requestPsr7($request)->send();
     }
 
     /**
@@ -220,7 +239,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($request)) {
             throw new HttpRequestException('The required RequestInterface instance is missing');
         }
-        return (new HttpRequestAsync($request, $guzzle))->send($onFulfilled, $onRejected)->promise();
+        return (new HttpRequestAsync($this->getCurrentOptions(), $guzzle))->requestPsr7($request)->send($onFulfilled, $onRejected)->promise();
     }
 
 }
