@@ -8,12 +8,29 @@
 
 namespace XsKit\PassportClient\Contracts;
 
+use Psr\Http\Message\RequestInterface;
+
 /**
  * Interface HttpRequestContract
  * @package XsKit\PassportClient\Contracts
  */
 interface HttpRequestContract
 {
+
+    /**
+     * 使用psr-7 对象请求
+     * @param RequestInterface $request
+     * @return mixed
+     */
+    public function requestPsr7(RequestInterface $request);
+
+    /**
+     * 设置基本地址
+     * @param $base_uri
+     * @return $this
+     */
+    public function baseUri($base_uri);
+
     /**
      * 设置查询url
      * @param string $value
