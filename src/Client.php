@@ -141,7 +141,7 @@ class Client implements ShouldRefreshTokenContract
      */
     public function requestAsync($api = null, array $guzzle = []): HttpRequestAsyncContract
     {
-        if (!$api instanceof ApiContract) {
+        if ($api instanceof ApiContract) {
             $http = new HttpRequestAsync($this->getCurrentOptions(), $guzzle);
             if (!empty($api) && is_string($api)) {
                 $http->baseUri($api);
@@ -163,7 +163,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($api)) {
             throw new HttpRequestException('The required ApiContract instance is missing');
         }
-        return $this->handleApi(new HttpRequest($this->getCurrentOptions(), $guzzle), $api)->send($api->method());
+        return $this->request($api, $guzzle)->send($api->method());
     }
 
     /**
@@ -179,7 +179,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($api)) {
             throw new HttpRequestException('The required ApiContract instance is missing');
         }
-        return $this->handleApi(new HttpRequestAsync($this->getCurrentOptions(), $guzzle), $api)
+        return $this->requestAsync($api, $guzzle)
             ->send($onFulfilled, $onRejected, $api->method())
             ->promise();
 
