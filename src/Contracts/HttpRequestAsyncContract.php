@@ -70,4 +70,12 @@ interface HttpRequestAsyncContract
     public function patch(callable $onFulfilled = null, callable $onRejected = null);
 
     public function promise(): PromiseInterface;
+
+    /**
+     * @param callable|null $onFulfilled
+     * @param callable|null $onRejected
+     * @param string $method
+     * @return $this
+     */
+    public function send(callable $onFulfilled = null, callable $onRejected = null, $method = '');
 }

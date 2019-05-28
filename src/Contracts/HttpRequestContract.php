@@ -51,5 +51,10 @@ interface HttpRequestContract
 
     public function upload(): HttpResponseContract;
 
+    /**
+     * @param $method
+     * @return HttpResponseContract
+     */
+    public function send($method = ''): HttpResponseContract;
 
 }
