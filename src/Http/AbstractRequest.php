@@ -42,9 +42,7 @@ abstract class AbstractRequest
         $this->options = $options;
         $this->baseUri = $options->getBaseUri();
         $setting_guzzle = $options->getGuzzleOptions();
-        $guzzle = [
-                'base_uri' => $this->baseUri
-            ] + $setting_guzzle + $guzzle;
+        $guzzle = $setting_guzzle + $guzzle;
 
         $this->http = new Http($guzzle);
     }
