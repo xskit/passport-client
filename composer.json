@@ -1,6 +1,6 @@
 {
   "name": "xskit/passport-client",
-  "description": "An authorized client based on the lararvel passport",
+  "description": "An authorized client based on the laravel passport",
   "keywords": [
     "passport",
     "oauth",
