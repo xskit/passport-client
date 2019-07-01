@@ -85,7 +85,7 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
     }
 
     /**
-     * @param $method
+     * @param string $method
      * @return HttpResponse
      */
     public function send($method = ''): HttpResponseContract
@@ -95,13 +95,13 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
             if ($this->request) {
                 $res = $this->http->send($this->request);
             } else {
-                $res = $this->http->request($method, $this->query, $this->guzzleOptions+ [
+                $res = $this->http->request($method, $this->query, $this->guzzleOptions + [
                         'base_uri' => $this->baseUri
                     ]);
             }
 
             $httpResponse->receive($res);
-        } catch (GuzzleException|\ReflectionException  $e) {
+        } catch (\Throwable|GuzzleException  $e) {
             $httpResponse->throwException($e);
         } finally {
             return $httpResponse;
