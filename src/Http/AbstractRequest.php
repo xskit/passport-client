@@ -138,7 +138,7 @@ abstract class AbstractRequest
      */
     public function withHeaders(array $value)
     {
-        $this->guzzleOptions['headers'] = array_merge($this->guzzleOptions['headers'], $value);
+        $this->guzzleOptions['headers'] = array_merge(Arr::get($this->guzzleOptions, 'headers', []), $value);
 
         return $this;
     }
