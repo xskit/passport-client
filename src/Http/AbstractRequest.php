@@ -118,4 +118,28 @@ abstract class AbstractRequest
         }
         return $this;
     }
+
+    /**
+     * 添加请求头
+     * @param array $value
+     * @return $this
+     */
+    public function setHeaders(array $value)
+    {
+        $this->guzzleOptions['headers'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * 添加请求头
+     * @param array $value
+     * @return $this
+     */
+    public function withHeaders(array $value)
+    {
+        $this->guzzleOptions['headers'] = array_merge($this->guzzleOptions['headers'], $value);
+
+        return $this;
+    }
 }
