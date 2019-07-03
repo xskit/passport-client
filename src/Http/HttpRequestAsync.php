@@ -101,12 +101,6 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
         if ($this->request) {
             $this->promise = $this->http->sendAsync($this->request, $this->guzzleOptions);
         } else {
-
-            if ($this->baseUri) {
-                $this->guzzleOptions += [
-                    'base_uri' => $this->baseUri
-                ];
-            }
             $this->promise = $this->http->requestAsync($method, $this->query, $this->guzzleOptions);
         }
 

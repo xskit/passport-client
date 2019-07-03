@@ -18,7 +18,7 @@ abstract class AbstractRequest
 {
     protected $baseUri;
 
-    protected $guzzleOptions;
+    protected $guzzleOptions = [];
 
     protected $http;
 
@@ -42,9 +42,15 @@ abstract class AbstractRequest
         $this->options = $options;
         $this->baseUri = $options->getBaseUri();
         $setting_guzzle = $options->getGuzzleOptions();
-        $guzzle = $setting_guzzle + $guzzle;
+        if ($this->baseUri) {
+            $setting_guzzle += [
+                'base_uri' => $this->baseUri
+            ];
+        }
 
-        $this->http = new Http($guzzle);
+        $this->guzzleOptions = $guzzle;
+
+        $this->http = new Http($setting_guzzle);
     }
 
     public function requestPsr7(RequestInterface $request)
