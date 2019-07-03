@@ -50,7 +50,6 @@ class HttpResponse implements HttpResponseContract
     /**
      * @param ResponseInterface $response
      * @return $this
-     * @throws \ReflectionException
      */
     public function receive(ResponseInterface $response)
     {
@@ -59,25 +58,7 @@ class HttpResponse implements HttpResponseContract
         $this->code = $response->getStatusCode();
         $this->message = $response->getReasonPhrase();
 
-        $this->body = $body = (string)$response->getBody();
-
-        //解析JSON
-        if ($data = json_decode($body, true)) {
-            $this->data = Arr::wrap(empty($data) ? null : $data);
-        }
-
-        //处理响应数据
-        $handleClass = $this->options->getResponseHandle();
-
-        if (!class_exists($handleClass) || !(new \ReflectionClass($handleClass))->implementsInterface(ResponseHandleContract::class)) {
-            throw new \LogicException(sprintf('The response_handle option has to be valid class that implements "%s"', ResponseHandleContract::class));
-        }
-
-        $closure = $handleClass::parseData();
-
-        if ($closure instanceof \Closure) {
-            $closure->call($this, $response);
-        }
+        $this->body = (string)$response->getBody();
 
         return $this;
     }
@@ -156,9 +137,27 @@ class HttpResponse implements HttpResponseContract
     /**
      * 返回 数据
      * @return mixed
+     * @throws \ReflectionException
      */
     public function getData()
     {
+        //解析JSON
+        if ($data = json_decode($this->body, true)) {
+            $this->data = Arr::wrap(empty($data) ? null : $data);
+        }
+
+        //处理响应数据
+        $handleClass = $this->options->getResponseHandle();
+
+        if (!class_exists($handleClass) || !(new \ReflectionClass($handleClass))->implementsInterface(ResponseHandleContract::class)) {
+            throw new \LogicException(sprintf('The response_handle [ %s ] option has to be valid class that implements "%s"', $handleClass, ResponseHandleContract::class));
+        }
+
+        $closure = $handleClass::parseData();
+
+        if ($closure instanceof \Closure) {
+            $closure->call($this, $this->response);
+        }
         return $this->data;
     }
 
