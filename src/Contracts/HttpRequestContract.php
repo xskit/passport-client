@@ -47,6 +47,20 @@ interface HttpRequestContract
     public function param($key, $value = null);
 
     /**
+     * 添加请求头
+     * @param array $value
+     * @return $this
+     */
+    public function withHeaders(array $value);
+
+    /**
+     * 设置请求头
+     * @param array $value
+     * @return $this
+     */
+    public function setHeaders(array $value);
+
+    /**
      * @param string $value
      * @return $this
      */
