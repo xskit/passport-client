@@ -93,11 +93,14 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
         $httpResponse = new HttpResponse($this->options);
         try {
             if ($this->request) {
-                $res = $this->http->send($this->request);
+                $res = $this->http->send($this->request,$this->guzzleOptions);
             } else {
-                $res = $this->http->request($method, $this->query, $this->guzzleOptions + [
+                if ($this->baseUri) {
+                    $this->guzzleOptions += [
                         'base_uri' => $this->baseUri
-                    ]);
+                    ];
+                }
+                $res = $this->http->request($method, $this->query, $this->guzzleOptions);
             }
 
             $httpResponse->receive($res);
