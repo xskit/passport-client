@@ -209,6 +209,8 @@ class Client implements ShouldRefreshTokenContract
 
         $api->token() && $http->token($api->token());
 
+        $api->headers() && $http->withHeaders($api->headers());
+
         return $http;
     }
 

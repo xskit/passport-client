@@ -46,4 +46,10 @@ interface ApiContract
      * @return string
      */
     public function method();
+
+    /**
+     * 请求头
+     * @return array
+     */
+    public function headers();
 }
