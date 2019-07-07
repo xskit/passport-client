@@ -141,6 +141,10 @@ class HttpResponse implements HttpResponseContract
      */
     public function getData()
     {
+        if (empty($this->response)) {
+            return null;
+        }
+
         //解析JSON
         $data = json_decode($this->body, true);
 
