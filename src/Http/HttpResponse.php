@@ -142,22 +142,25 @@ class HttpResponse implements HttpResponseContract
     public function getData()
     {
         //解析JSON
-        if ($data = json_decode($this->body, true)) {
-            $this->data = Arr::wrap(empty($data) ? null : $data);
-        }
+        $data = json_decode($this->body, true);
+
+        $this->data = Arr::wrap(empty($data) ? $this->body : $data);
 
         //处理响应数据
         $handleClass = $this->options->getResponseHandle();
 
-        if (!class_exists($handleClass) || !(new \ReflectionClass($handleClass))->implementsInterface(ResponseHandleContract::class)) {
-            throw new \LogicException(sprintf('The response_handle [ %s ] option has to be valid class that implements "%s"', $handleClass, ResponseHandleContract::class));
+        if (!empty($handleClass)) {
+            if (!class_exists($handleClass) || !(new \ReflectionClass($handleClass))->implementsInterface(ResponseHandleContract::class)) {
+                throw new \LogicException(sprintf('The response_handle [ %s ] option has to be valid class that implements "%s"', $handleClass, ResponseHandleContract::class));
+            }
+
+            $closure = $handleClass::parseData();
+
+            if ($closure instanceof \Closure) {
+                $closure->call($this, $this->response);
+            }
         }
 
-        $closure = $handleClass::parseData();
-
-        if ($closure instanceof \Closure) {
-            $closure->call($this, $this->response);
-        }
         return $this->data;
     }
 

@@ -55,11 +55,10 @@ class ClientOptions
 
     /**
      * 获取
-     * @param string $default
      * @return mixed
      */
-    public function getResponseHandle($default = ResponseHandle::class)
+    public function getResponseHandle()
     {
-        return Arr::get($this->settings, 'response_handle', $default);
+        return Arr::get($this->settings, 'response_handle');
     }
 }
