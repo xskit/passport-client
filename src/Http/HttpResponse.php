@@ -221,6 +221,12 @@ class HttpResponse implements HttpResponseContract
      */
     public function toArray()
     {
+        try {
+            $this->getData();
+        } catch (\Exception $e) {
+            return [];
+        }
+
         return empty($this->data) ? [] : Arr::wrap($this->data);
     }
 
