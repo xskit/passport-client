@@ -41,7 +41,7 @@ class ClientOptions
      */
     public function getBaseUri(): string
     {
-        return rtrim(Arr::get($this->settings, 'base_uri'), '/');
+        return Arr::get($this->settings, 'base_uri');
     }
 
     /**

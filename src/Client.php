@@ -141,7 +141,7 @@ class Client implements ShouldRefreshTokenContract
      */
     public function requestAsync($api = null, array $guzzle = []): HttpRequestAsyncContract
     {
-        if ($api instanceof ApiContract) {
+        if (!$api instanceof ApiContract) {
             $http = new HttpRequestAsync($this->getCurrentOptions(), $guzzle);
             if (!empty($api) && is_string($api)) {
                 $http->baseUri($api);

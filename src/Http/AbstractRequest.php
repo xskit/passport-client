@@ -67,6 +67,9 @@ abstract class AbstractRequest
     public function baseUri($base_uri)
     {
         $this->baseUri = $base_uri;
+        $this->guzzleOptions = array_merge($this->guzzleOptions, [
+            'base_uri' => $this->baseUri
+        ]);
         return $this;
     }
 
