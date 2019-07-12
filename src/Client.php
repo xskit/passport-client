@@ -163,7 +163,7 @@ class Client implements ShouldRefreshTokenContract
         if (empty($api)) {
             throw new HttpRequestException('The required ApiContract instance is missing');
         }
-        return $this->request($api, $guzzle)->{$api->method()};
+        return $this->request($api, $guzzle)->{$api->method()}();
     }
 
     /**
