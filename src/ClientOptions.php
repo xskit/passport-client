@@ -39,7 +39,7 @@ class ClientOptions
      * 获取当前配置的基础uri
      * @return string
      */
-    public function getBaseUri(): string
+    public function getBaseUri(): ?string
     {
         return Arr::get($this->settings, 'base_uri');
     }
