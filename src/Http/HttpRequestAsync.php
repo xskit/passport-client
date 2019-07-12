@@ -25,6 +25,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function get(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send('GET', $onFulfilled, $onRejected);
     }
 
@@ -35,6 +36,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function post(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['form_params'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'GET');
     }
 
@@ -45,6 +47,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function put(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['form_params'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'PUT');
     }
 
@@ -55,6 +58,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function delete(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'DELETE');
     }
 
@@ -65,6 +69,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function options(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'OPTIONS');
     }
 
@@ -75,6 +80,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function head(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['query'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'HEAD');
     }
 
@@ -85,6 +91,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function patch(callable $onFulfilled = null, callable $onRejected = null)
     {
+        $this->guzzleOptions['form_params'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'PATCH');
     }
 
