@@ -47,7 +47,7 @@ class HttpRequestAsync extends AbstractRequest implements HttpRequestAsyncContra
      */
     public function put(callable $onFulfilled = null, callable $onRejected = null)
     {
-        $this->guzzleOptions['form_params'] = $this->param;
+        $this->guzzleOptions['json'] = $this->param;
         return $this->send($onFulfilled, $onRejected, 'PUT');
     }
 

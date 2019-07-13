@@ -38,7 +38,7 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
      */
     public function put(): HttpResponseContract
     {
-        $this->guzzleOptions['form_params'] = $this->param;
+        $this->guzzleOptions['json'] = $this->param;
         return $this->send('PUT');
     }
 
@@ -93,7 +93,7 @@ class HttpRequest extends AbstractRequest implements HttpRequestContract
         $httpResponse = new HttpResponse($this->options);
         try {
             if ($this->request) {
-                $res = $this->http->send($this->request,$this->guzzleOptions);
+                $res = $this->http->send($this->request, $this->guzzleOptions);
             } else {
                 $res = $this->http->request($method, $this->query, $this->guzzleOptions);
             }
